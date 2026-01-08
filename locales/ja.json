@@ -1,0 +1,644 @@
+{
+  "common": {
+    "actions": {
+      "save": "保存",
+      "cancel": "キャンセル",
+      "discard": "破棄",
+      "submit": "提出",
+      "delete": "削除",
+      "remove": "削除",
+      "edit": "編集",
+      "close": "閉じる",
+      "add": "追加",
+      "confirm": "確認",
+      "retry": "再試行",
+      "tryAgain": "もう一度試す",
+      "loadMore": "さらに読み込む",
+      "ok": "OK"
+    },
+    "status": {
+      "loading": "読み込み中...",
+      "success": "成功",
+      "error": "エラー",
+      "pending": "保留中",
+      "processing": "処理中",
+      "failed": "失敗",
+      "retrying": "再試行中...",
+      "savingMemo": "メモの保存に失敗しました"
+    },
+    "responses": {
+      "yes": "はい",
+      "no": "いいえ"
+    },
+    "feedback": {
+      "success": "成功！",
+      "saved": "正常に保存されました",
+      "updated": "正常に更新されました",
+      "deleted": "正常に削除されました",
+      "applied": "正常に適用されました"
+    }
+  },
+  "network": {
+    "offline": "オフラインです",
+    "online": "オンラインです",
+    "connectionRestored": "接続が復旧しました",
+    "noConnection": "インターネット接続がありません",
+    "noConnectionTitle": "インターネット接続がありません",
+    "noConnectionMessage": "現在オフラインです。再接続するまで一部の機能が利用できない場合があります。",
+    "connectionRestoredTitle": "接続が復旧しました",
+    "connectionRestoredMessage": "オンラインに戻りました。すべての機能が利用可能です。",
+    "checkConnection": "ネットワークを確認してもう一度お試しください",
+    "checkConnectionAndRetry": "インターネット接続を確認してもう一度お試しください。",
+    "unableToConnect": "サーバーに接続できません。もう一度お試しください。",
+    "retryWhenOnline": "接続が復旧したら再試行します",
+    "connectionProblem": "接続の問題",
+    "offlineDuration": {
+      "lessThanMinute": "オフラインです",
+      "minutes": "{{count}}分間オフラインです。接続を確認してください。",
+      "hours": "{{hours}}時間{{minutes}}分間オフラインです。接続を確認してください。"
+    }
+  },
+  "errors": {
+    "general": "予期しないエラーが発生しました",
+    "network": "ネットワークエラーが発生しました",
+    "timeout": "リクエストがタイムアウトしました",
+    "serverError": "サーバーエラーが発生しました",
+    "unauthorized": "認証が必要です",
+    "forbidden": "アクセスが拒否されました",
+    "notFound": "リソースが見つかりません",
+    "conflict": "競合が発生しました",
+    "tooManyRequests": "リクエストが多すぎます",
+    "serviceUnavailable": "サービスが一時的に利用できません",
+    "somethingWentWrong": "何かが間違っています",
+    "pleaseTryAgain": "もう一度お試しください",
+    "retryAttempt": "再試行 {{count}} / {{max}}",
+    "errorDetails": "エラー詳細：",
+    "noDataFound": "データが見つかりません",
+    "noItemsToDisplay": "表示するアイテムがありません。",
+    "allFieldsValid": "すべてのフィールドが有効です",
+    "fixFollowingIssues": "次の問題を修正してください：",
+    "boundary": {
+      "title": "エラーが発生しました",
+      "message": "申し訳ございませんが、予期しないエラーが発生しました。もう一度お試しください。",
+      "restartApp": "アプリを再起動",
+      "detailsTitle": "エラー詳細（開発モード）"
+    }
+  },
+  "navigation": {
+    "menu": "メニュー",
+    "authentication": "認証",
+    "logout": "ログアウト",
+    "settings": "設定",
+    "darkTheme": "ダークテーマ",
+    "pushNotifications": "プッシュ通知",
+    "changePassword": "パスワード変更",
+    "language": "言語",
+    "adminOnly": "管理者専用",
+    "superiorMode": "上級モード",
+    "switchUserAccount": "ユーザーアカウントの切り替え",
+    "appVersion": "派遣アプリ v1.0",
+    "appSubtitle": "社内作業者ポータル",
+    "search": "検索",
+    "addNew": "新規追加",
+    "manuals": "マニュアル",
+    "selectOption": "オプションを選択"
+  },
+  "role": {
+    "user": "派遣作業員",
+    "supervisor": "監督者",
+    "admin": "管理者",
+    "userMode": "ユーザーモード"
+  },
+  "auth": {
+    "title": "派遣アプリ",
+    "subtitle": "社内作業者ポータル",
+    "username": "ユーザー名",
+    "password": "パスワード",
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "loggingIn": "ログイン中...",
+    "forgotPassword": "パスワードをお忘れですか？",
+    "logoutError": "ログアウトに失敗しました。もう一度お試しください。",
+    "errors": {
+      "general": "エラー",
+      "invalidCredentials": "無効な認証情報",
+      "loginFailed": "ログインに失敗しました",
+      "emptyFields": "ユーザー名とパスワードの両方を入力してください"
+    }
+  },
+  "tabs": {
+    "create": "作成",
+    "search": "検索",
+    "browse": "閲覧",
+    "history": "履歴"
+  },
+  "tabSwitcher": {
+    "submissions": "提出物",
+    "personalMemos": "個人メモ",
+    "memo": "メモ",
+    "employeeDetails": "従業員詳細"
+  },
+  "submission": {
+    "submitted": "提出済み",
+    "approved": "承認済み",
+    "rejected": "却下",
+    "draft": "下書き",
+    "noDescription": "説明はありません。",
+    "issuesFeedback": "問題とフィードバック：",
+    "taskProgress": "タスク進捗",
+    "completed": "完了：",
+    "tomorrow": "明日：",
+    "addComment": "コメントを追加...",
+    "reply": "返信",
+    "posting": "投稿中...",
+    "comments": "コメント",
+    "noComments": "まだコメントがありません。最初にコメントしてください！",
+    "noCommentsMessage": "この提出物に最初のコメントを追加してください。",
+    "failedAddComment": "コメントの追加に失敗しました",
+    "offlineComment": "オフラインです。再接続するとコメントが利用できます。",
+    "error": "エラー"
+  },
+  "memos": {
+    "writeMemo": "個人メモを書く...",
+    "saveMemo": "メモを保存",
+    "deleteMemo": "メモを削除",
+    "confirmDelete": "このメモを削除してもよろしいですか？",
+    "noMemos": "まだメモがありません。上記で最初のメモを作成してください！"
+  },
+  "employee": {
+    "backToSearch": "検索に戻る",
+    "errorNoData": "エラー：ユーザーデータがありません",
+    "employeeId": "従業員ID",
+    "username": "ユーザー名",
+    "hourlyRate": "時給",
+    "email": "メール",
+    "phone": "電話",
+    "address": "住所",
+    "joinDate": "入社日",
+    "department": "部署",
+    "status": "ステータス",
+    "recentActivity": "最近の活動",
+    "viewSubmissions": "提出物を見る",
+    "contact": "連絡する",
+    "fieldOperations": "現場業務",
+    "management": "管理",
+    "active": "アクティブ"
+  },
+  "summary": {
+    "thisWeek": "今週",
+    "weekSalary": "週給",
+    "newReports": "新規レポート",
+    "totalEntries": "合計エントリー",
+    "totalHours": "合計時間",
+    "totalSalary": "合計給与"
+  },
+  "create": {
+    "title": "提出を作成",
+    "selectDate": "📅 日付を選択",
+    "logManhours": "⏰ 作業時間を記録",
+    "startTime": "開始時間",
+    "endTime": "終了時間",
+    "company": "会社",
+    "selectCompany": "会社を選択",
+    "issuesFeedback": "⚠️ 問題とフィードバック",
+    "reportIssues": "問題やフィードバックを報告...",
+    "taskProgress": "📋 タスク進捗",
+    "completedToday": "今日完了したこと",
+    "whatCompleted": "今日はどのようなタスクを完了しましたか？",
+    "tomorrowPlan": "明日の予定",
+    "whatTomorrow": "明日は何をする予定ですか？",
+    "saveAsDraft": "下書きとして保存",
+    "submit": "提出",
+    "success": "成功",
+    "draftSaved": "下書きが正常に保存されました",
+    "submissionCreated": "提出が正常に作成されました",
+    "error": "エラー",
+    "fillRequired": "必須フィールドをすべて入力してください",
+    "failedSaveDraft": "下書きの保存に失敗しました",
+    "failedSubmit": "提出の作成に失敗しました",
+    "offlineCompanies": "オフラインでは会社情報が利用できません",
+    "saving": "保存中...",
+    "submitting": "提出中...",
+    "offlineMode": "オフラインモード",
+    "offlineMessage": "現在オフラインです。一部の機能が利用できない場合があります。"
+  },
+  "history": {
+    "title": "履歴",
+    "currentFilter": "🔽 現在のフィルター",
+    "clearAllFilters": "すべてのフィルターをクリア",
+    "dateRange": "日付範囲：",
+    "status": "ステータス：",
+    "allSubmissions": "すべての提出",
+    "dateRangeHeader": "📅 日付範囲",
+    "from": "開始日",
+    "to": "終了日",
+    "thisMonth": "今月",
+    "lastMonth": "先月",
+    "thisYear": "今年",
+    "filterOptions": "フィルターオプション",
+    "submissionStatus": "提出状況",
+    "allSubmissionsOption": "すべての提出",
+    "submittedOption": "提出済み",
+    "draftOption": "下書き",
+    "approvedOption": "承認済み",
+    "rejectedOption": "却下",
+    "allCompanies": "すべての会社",
+    "hoursRange": "時間範囲",
+    "minHours": "最小時間",
+    "maxHours": "最大時間",
+    "summaryCurrentFilter": "概要（現在のフィルター）",
+    "applyFilter": "閲覧タブにフィルターを適用",
+    "offlineCompanies": "オフラインでは会社情報が利用できません",
+    "applying": "適用中...",
+    "offlineMode": "オフラインモード",
+    "offlineMessage": "現在オフラインです。一部の機能が利用できない場合があります。"
+  },
+  "userSearch": {
+    "searchWorkers": "作業員を検索...",
+    "searchSupervisors": "監督者を検索...",
+    "workers": "作業員",
+    "supervisors": "監督者",
+    "tooManyResults": "結果が多すぎます。検索条件を絞り込んでください。",
+    "noMatchingUsers": "一致するユーザーが見つかりません",
+    "noUsersFoundMessage": "「{query}」に一致するユーザーが見つかりません",
+    "tryAdjustingSearch": "検索条件を調整してください",
+    "enterNameWorkers": "作業員を検索する名前を入力してください",
+    "enterNameSupervisors": "監督者を検索する名前を入力してください",
+    "searching": "検索中...",
+    "searchTooShort": "検索するには少なくとも2文字入力してください",
+    "searchError": "検索に失敗しました"
+  },
+  "browse": {
+    "offlineMode": "オフラインモード",
+    "offlineMessage": "現在オフラインです。一部の機能が利用できない場合があります。",
+    "error": "データの読み込みエラー",
+    "loading": "提出物を読み込み中...",
+    "noSubmissions": "提出物が見つかりません",
+    "noSubmissionsMessage": "最初の提出物を作成して作業進捗を追跡しましょう。"
+  },
+  "submissions": {
+    "title": "提出物",
+    "loading": "提出物を読み込み中...",
+    "refreshing": "更新中...",
+    "noSubmissions": "提出物がありません",
+    "noSubmissionsMessage": "現在のフィルター設定に一致する提出物がありません。",
+    "failedToLoad": "提出物の読み込みに失敗しました",
+    "errorLoading": "提出物の読み込みエラー",
+    "pullToRefresh": "引っ張って更新",
+    "filterBy": "種類でフィルター",
+    "tabs": {
+      "inquiries": "問合せ",
+      "dailyRecord": "日報",
+      "interactionRecords": "相談",
+      "complaintDetails": "届け出"
+    }
+  },
+  "notifications": {
+    "title": "通知",
+    "dashboard": "通知ダッシュボード",
+    "noNotifications": "通知がありません",
+    "noUnreadNotifications": "未読の通知がありません",
+    "emptyState": "すべて確認済みです！",
+    "emptyStateMessage": "すべて確認済みです！現在新しい通知はありません。",
+    "markAsRead": "既読にする",
+    "markAllAsRead": "すべて既読にする",
+    "deleteNotification": "通知を削除",
+    "newNotification": "新しい通知",
+    "unreadCount": "{{count}}件の未読",
+    "loadingNotifications": "通知を読み込み中...",
+    "failedToLoad": "通知の読み込みに失敗しました",
+    "failedToMarkRead": "既読にできませんでした",
+    "failedToDelete": "通知の削除に失敗しました",
+    "notificationMarkedRead": "通知を既読にしました",
+    "allNotificationsRead": "すべての通知を既読にしました",
+    "notificationDeleted": "通知を削除しました",
+    "offlineNotifications": "オフラインでは通知が利用できません",
+    "refreshNotifications": "通知を更新",
+    "refreshing": "更新中...",
+    "pullToRefresh": "引っ張って更新",
+    "closePanel": "通知を閉じる",
+    "lastMessage": "最後のメッセージ",
+    "updatedAt": "更新日時",
+    "viewDetails": "詳細を表示",
+    "noMessagePreview": "メッセージのプレビューがありません",
+    "tapToViewDetails": "タップして詳細を表示",
+    "timeAgo": {
+      "justNow": "たった今",
+      "minutesAgo": "{{count}}分前",
+      "hoursAgo": "{{count}}時間前",
+      "daysAgo": "{{count}}日前"
+    },
+    "detailDialog": {
+      "recordType": "登録種類",
+      "recordDetails": "登録詳細",
+      "messageHistory": "メッセージ履歴",
+      "noMessages": "メッセージがありません",
+      "markAsReadButton": "既読にする",
+      "markingAsRead": "既読にしています...",
+      "closeButton": "閉じる",
+      "successMarkedRead": "既読にしました",
+      "errorMarkingRead": "既読にできませんでした",
+      "inquirerName": "問合せ者名",
+      "contact": "連絡先",
+      "dateOfInquiry": "問合せ日",
+      "type": "種類",
+      "status": "ステータス",
+      "content": "内容",
+      "date": "日付",
+      "condition": "状態",
+      "contactNumber": "連絡先番号",
+      "feedback": "フィードバック",
+      "location": "場所",
+      "means": "連絡方法",
+      "description": "説明",
+      "responseDetails": "対応詳細",
+      "name": "名前",
+      "title": "タイトル",
+      "dateOfOccurrence": "発生日",
+      "personInvolved": "関係者",
+      "urgency": "緊急度",
+      "complainerName": "苦情申立者名",
+      "photo": "写真"
+    },
+    "openChatMessages": "チャットメッセージを開く",
+    "closeChatMessages": "チャットメッセージを閉じる",
+    "types": {
+      "inquiries": "問合せ",
+      "daily_record": "日報",
+      "interaction_records": "相談",
+      "complaint_details": "届け出"
+    }
+  },
+  "search": {
+    "title": "検索",
+    "searchPlaceholder": "すべての登録を検索...",
+    "searching": "検索中...",
+    "noResults": "結果が見つかりません",
+    "noResultsMessage": "別のキーワードを試すか、スペルを確認してください",
+    "enterKeywords": "検索するキーワードを入力してください",
+    "resultsCount": "{{count}}件の結果が見つかりました",
+    "tableName": "種類",
+    "matchedFields": "一致したフィールド",
+    "preview": "プレビュー",
+    "viewDetails": "詳細を表示",
+    "failedToSearch": "検索に失敗しました",
+    "offlineSearch": "オフラインでは検索が利用できません",
+    "startDate": "開始日",
+    "endDate": "終了日",
+    "invalidDateRange": "開始日は終了日以前である必要があります",
+    "clearDates": "日付をクリア",
+    "types": {
+      "inquiries": "問合せ",
+      "daily_record": "日報",
+      "interaction_records": "相談",
+      "complaint_details": "届け出"
+    }
+  },
+  "manuals": {
+    "title": "マニュアル・文書",
+    "searchPlaceholder": "文書を検索...",
+    "loading": "文書を読み込み中...",
+    "noDocuments": "文書が見つかりません",
+    "noDocumentsMessage": "検索に一致する文書がありません",
+    "enterKeywords": "文書を検索するキーワードを入力してください",
+    "failedToLoad": "文書の読み込みに失敗しました",
+    "offlineManuals": "オフラインでは文書が利用できません",
+    "placeholder": "文書ブラウザは近日公開予定",
+    "documentType": "種類",
+    "documentTitle": "タイトル",
+    "documentStatus": "ステータス",
+    "startDate": "開始日",
+    "endDate": "終了日",
+    "viewDocument": "文書を表示",
+    "noFileAvailable": "この文書にはファイルがありません",
+    "failedToOpenDocument": "文書を開けませんでした。もう一度お試しください。",
+    "noPDFViewer": "PDFビューアアプリが見つかりません。PDFリーダーアプリをインストールしてください。",
+    "types": {
+      "STAFF": "スタッフ文書",
+      "PROPERTY": "物件文書",
+      "COMPANY": "会社文書",
+      "MANUAL": "ユーザーマニュアル"
+    },
+    "status": {
+      "ACTIVE": "有効",
+      "EXPIRED": "期限切れ",
+      "TERMINATED": "終了"
+    }
+  },
+  "enums": {
+    "urgencyLevel": {
+      "High": "高",
+      "Medium": "中",
+      "Low": "低"
+    },
+    "interactionType": {
+      "DISCUSSION": "議論",
+      "INTERVIEW": "面接",
+      "CONSULTATION": "相談",
+      "OTHER": "その他"
+    },
+    "interactionMeans": {
+      "FACE_TO_FACE": "対面",
+      "ONLINE": "オンライン",
+      "PHONE": "電話",
+      "EMAIL": "メール"
+    },
+    "conditionStatus": {
+      "Excellent": "優秀",
+      "Good": "良好",
+      "Fair": "普通",
+      "Poor": "不良"
+    },
+    "progressStatus": {
+      "PENDING": "保留中",
+      "IN_PROGRESS": "進行中",
+      "RESOLVED": "解決済み",
+      "CLOSED": "終了",
+      "CANCELLED": "キャンセル"
+    },
+    "inquiryType": {
+      "GENERAL": "一般",
+      "TECHNICAL": "技術",
+      "BILLING": "請求",
+      "SUPPORT": "サポート",
+      "OTHER": "その他"
+    }
+  },
+  "forms": {
+    "validation": {
+      "minLength": "{{min}}文字以上である必要があります"
+    },
+    "swipeableDialog": {
+      "title": "新規登録作成",
+      "swipeHint": "左右にスワイプしてフォームを切り替え",
+      "confirmTitle": "変更を破棄しますか？",
+      "confirmDiscard": "保存されていない変更があります。破棄してもよろしいですか？",
+      "currentForm": "現在: {{formName}}",
+      "formIndicator": "{{current}} / {{total}}",
+      "submitting": "送信中...",
+      "submitSuccess": "登録が正常に作成されました",
+      "submitError": "登録の作成に失敗しました",
+      "validationError": "必須フィールドをすべて入力してください",
+      "closeDialog": "閉じる",
+      "cancelButton": "キャンセル"
+    },
+    "inquiry": {
+      "title": "問合せ",
+      "fields": {
+        "dateOfInquiry": "問合せ日",
+        "inquirerName": "問合せ者名",
+        "inquirerContact": "連絡先情報",
+        "typeOfInquiry": "問合せ種類",
+        "inquiryContent": "問合せ内容"
+      },
+      "placeholders": {
+        "enterName": "問合せ者名を入力",
+        "enterContact": "連絡先情報を入力",
+        "enterType": "問合せ種類を入力",
+        "enterContent": "問合せ詳細を入力"
+      },
+      "errors": {
+        "dateRequired": "日付は必須です",
+        "nameRequired": "問合せ者名は必須です",
+        "contactRequired": "連絡先情報は必須です",
+        "typeRequired": "問合せ種類は必須です",
+        "contentRequired": "問合せ内容は必須です",
+        "submitFailed": "問合せの送信に失敗しました"
+      }
+    },
+    "dailyRecord": {
+      "title": "日報",
+      "fields": {
+        "dateOfRecord": "記録日",
+        "conditionStatus": "状態",
+        "feedbackContent": "フィードバック内容",
+        "contactNumber": "連絡先番号"
+      },
+      "placeholders": {
+        "enterCondition": "状態を入力",
+        "enterFeedback": "フィードバック詳細を入力",
+        "enterContact": "連絡先番号を入力"
+      },
+      "errors": {
+        "dateRequired": "日付は必須です",
+        "conditionRequired": "状態は必須です",
+        "feedbackRequired": "フィードバック内容は必須です",
+        "submitFailed": "日報の送信に失敗しました"
+      }
+    },
+    "interactionRecord": {
+      "title": "相談",
+      "fields": {
+        "type": "種類",
+        "date": "日付",
+        "name": "名前",
+        "title": "タイトル",
+        "description": "説明",
+        "location": "場所",
+        "means": "連絡方法",
+        "responseDetails": "対応詳細"
+      },
+      "placeholders": {
+        "enterType": "対応種類を入力",
+        "enterName": "名前を入力",
+        "enterTitle": "タイトルを入力",
+        "enterDescription": "説明を入力",
+        "enterLocation": "場所を入力",
+        "enterMeans": "連絡方法を入力",
+        "enterResponse": "対応詳細を入力"
+      },
+      "errors": {
+        "typeRequired": "種類は必須です",
+        "dateRequired": "日付は必須です",
+        "descriptionRequired": "説明は必須です",
+        "submitFailed": "相談の送信に失敗しました"
+      }
+    },
+    "complaintDetail": {
+      "title": "届け出",
+      "fields": {
+        "dateOfOccurrence": "発生日",
+        "complainerName": "苦情申立者名",
+        "complainerContact": "連絡先情報",
+        "personInvolved": "関係者",
+        "urgencyLevel": "緊急度",
+        "complaintContent": "苦情内容"
+      },
+      "placeholders": {
+        "enterName": "苦情申立者名を入力",
+        "enterContact": "連絡先情報を入力",
+        "enterPerson": "関係者を入力",
+        "enterUrgency": "緊急度を入力（高/中/低）",
+        "enterContent": "届け出を入力"
+      },
+      "errors": {
+        "dateRequired": "日付は必須です",
+        "nameRequired": "苦情申立者名は必須です",
+        "contentRequired": "苦情内容は必須です",
+        "urgencyRequired": "緊急度は必須です",
+        "submitFailed": "届け出の送信に失敗しました"
+      }
+    }
+  },
+  "photoUpload": {
+    "labels": {
+      "photo": "写真",
+      "tapToAdd": "タップして写真を追加"
+    },
+    "actions": {
+      "takePhoto": "写真を撮る",
+      "choosePhoto": "写真を選択",
+      "removePhoto": "写真を削除"
+    },
+    "selectSource": {
+      "title": "写真ソースを選択",
+      "message": "写真の取得元を選択してください",
+      "camera": "写真を撮る",
+      "gallery": "ギャラリーから選択"
+    },
+    "confirmRemove": {
+      "title": "写真を削除",
+      "message": "この写真を削除してもよろしいですか？"
+    },
+    "errors": {
+      "permissionDenied": "権限が拒否されました",
+      "permissionRequired": "フォトライブラリへのアクセスを許可してください",
+      "cameraPermissionRequired": "カメラへのアクセスを許可してください",
+      "pickFailed": "写真の選択に失敗しました",
+      "captureFailed": "写真の撮影に失敗しました",
+      "uploadFailed": "写真のアップロードに失敗しました"
+    },
+    "status": {
+      "uploading": "写真をアップロード中..."
+    }
+  },
+  "datePicker": {
+    "selectDate": "日付を選択",
+    "cancel": "キャンセル",
+    "done": "完了",
+    "selectDateTitle": "日付を選択",
+    "dayNames": {
+      "sun": "日",
+      "mon": "月",
+      "tue": "火",
+      "wed": "水",
+      "thu": "木",
+      "fri": "金",
+      "sat": "土"
+    },
+    "monthNames": {
+      "january": "1月",
+      "february": "2月",
+      "march": "3月",
+      "april": "4月",
+      "may": "5月",
+      "june": "6月",
+      "july": "7月",
+      "august": "8月",
+      "september": "9月",
+      "october": "10月",
+      "november": "11月",
+      "december": "12月"
+    }
+  }
+}

@@ -1,0 +1,644 @@
+{
+  "common": {
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "discard": "Discard",
+      "submit": "Submit",
+      "delete": "Delete",
+      "remove": "Remove",
+      "edit": "Edit",
+      "close": "Close",
+      "add": "Add",
+      "confirm": "Confirm",
+      "retry": "Retry",
+      "tryAgain": "Try Again",
+      "loadMore": "Load More",
+      "ok": "OK"
+    },
+    "status": {
+      "loading": "Loading...",
+      "success": "Success",
+      "error": "Error",
+      "pending": "Pending",
+      "processing": "Processing",
+      "failed": "Failed",
+      "retrying": "Retrying...",
+      "savingMemo": "Failed to save memo"
+    },
+    "responses": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "feedback": {
+      "success": "Success!",
+      "saved": "Saved successfully",
+      "updated": "Updated successfully",
+      "deleted": "Deleted successfully",
+      "applied": "Applied successfully"
+    }
+  },
+  "network": {
+    "offline": "You are offline",
+    "online": "You are online",
+    "connectionRestored": "Connection restored",
+    "noConnection": "No internet connection",
+    "noConnectionTitle": "No Internet Connection",
+    "noConnectionMessage": "You are currently offline. Some features may not be available until you reconnect.",
+    "connectionRestoredTitle": "Connection Restored",
+    "connectionRestoredMessage": "You are back online. All features are now available.",
+    "checkConnection": "Please check your network and try again",
+    "checkConnectionAndRetry": "Please check your internet connection and try again.",
+    "unableToConnect": "Unable to connect to the server. Please try again.",
+    "retryWhenOnline": "Will retry when connection is restored",
+    "connectionProblem": "Connection problem",
+    "offlineDuration": {
+      "lessThanMinute": "You are offline",
+      "minutes": "You have been offline for {{count}} minute{{plural}}. Please check your connection.",
+      "hours": "You have been offline for {{hours}}h {{minutes}}m. Please check your connection."
+    }
+  },
+  "errors": {
+    "general": "An unexpected error occurred",
+    "network": "Network error occurred",
+    "timeout": "Request timed out",
+    "serverError": "Server error occurred",
+    "unauthorized": "Authentication required",
+    "forbidden": "Access denied",
+    "notFound": "Resource not found",
+    "conflict": "A conflict occurred",
+    "tooManyRequests": "Too many requests",
+    "serviceUnavailable": "Service temporarily unavailable",
+    "somethingWentWrong": "Something went wrong",
+    "pleaseTryAgain": "Please try again",
+    "retryAttempt": "Retry attempt {{count}} of {{max}}",
+    "errorDetails": "Error Details:",
+    "noDataFound": "No data found",
+    "noItemsToDisplay": "There are no items to display.",
+    "allFieldsValid": "All fields are valid",
+    "fixFollowingIssues": "Please fix the following issues:",
+    "boundary": {
+      "title": "Oops! Something went wrong",
+      "message": "We're sorry, but something unexpected happened. Please try again.",
+      "restartApp": "Restart App",
+      "detailsTitle": "Error Details (Development)"
+    }
+  },
+  "navigation": {
+    "menu": "Menu",
+    "authentication": "Authentication",
+    "logout": "Log Out",
+    "settings": "Settings",
+    "darkTheme": "Dark Theme",
+    "pushNotifications": "Push Notifications",
+    "changePassword": "Change Password",
+    "language": "Language",
+    "adminOnly": "Admin Only",
+    "superiorMode": "Superior Mode",
+    "switchUserAccount": "Switch User Account",
+    "appVersion": "Crew App v1.0",
+    "appSubtitle": "Internal Worker Portal",
+    "search": "Search",
+    "addNew": "Add New",
+    "manuals": "Manuals",
+    "selectOption": "Select an option"
+  },
+  "role": {
+    "user": "Crew User",
+    "supervisor": "Supervisor",
+    "admin": "Administrator",
+    "userMode": "User Mode"
+  },
+  "auth": {
+    "title": "Crew App",
+    "subtitle": "Internal Worker Portal",
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+    "logout": "Logout",
+    "loggingIn": "Logging In...",
+    "forgotPassword": "Forgot password?",
+    "logoutError": "Failed to logout. Please try again.",
+    "errors": {
+      "general": "Error",
+      "invalidCredentials": "Invalid credentials",
+      "loginFailed": "Login failed",
+      "emptyFields": "Please enter both username and password"
+    }
+  },
+  "tabs": {
+    "create": "Create",
+    "search": "Search",
+    "browse": "Browse",
+    "history": "History"
+  },
+  "tabSwitcher": {
+    "submissions": "Submissions",
+    "personalMemos": "Personal Memos",
+    "memo": "Memo",
+    "employeeDetails": "Employee Details"
+  },
+  "submission": {
+    "submitted": "Submitted",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "draft": "Draft",
+    "noDescription": "No description provided.",
+    "issuesFeedback": "Issues & Feedback:",
+    "taskProgress": "Task Progress",
+    "completed": "Completed:",
+    "tomorrow": "Tomorrow:",
+    "addComment": "Add a comment...",
+    "reply": "Reply",
+    "posting": "Posting...",
+    "comments": "Comments",
+    "noComments": "No comments yet. Be the first to comment!",
+    "noCommentsMessage": "Be the first to add a comment to this submission.",
+    "failedAddComment": "Failed to add comment",
+    "offlineComment": "You're offline. Comments will be available when you reconnect.",
+    "error": "Error"
+  },
+  "memos": {
+    "writeMemo": "Write a personal memo...",
+    "saveMemo": "Save Memo",
+    "deleteMemo": "Delete Memo",
+    "confirmDelete": "Are you sure you want to delete this memo?",
+    "noMemos": "No memos yet. Create your first memo above!"
+  },
+  "employee": {
+    "backToSearch": "Back to Search",
+    "errorNoData": "Error: User data not available",
+    "employeeId": "Employee ID",
+    "username": "Username",
+    "hourlyRate": "Hourly Rate",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "joinDate": "Join Date",
+    "department": "Department",
+    "status": "Status",
+    "recentActivity": "Recent Activity",
+    "viewSubmissions": "View Submissions",
+    "contact": "Contact",
+    "fieldOperations": "Field Operations",
+    "management": "Management",
+    "active": "Active"
+  },
+  "summary": {
+    "thisWeek": "This Week",
+    "weekSalary": "Week Salary",
+    "newReports": "New Reports",
+    "totalEntries": "Total Entries",
+    "totalHours": "Total Hours",
+    "totalSalary": "Total Salary"
+  },
+  "create": {
+    "title": "Create Submission",
+    "selectDate": "📅 Select Date",
+    "logManhours": "⏰ Log Manhours",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "company": "Company",
+    "selectCompany": "Select company",
+    "issuesFeedback": "⚠️ Issues & Feedback",
+    "reportIssues": "Report any problems, issues, or feedback...",
+    "taskProgress": "📋 Task Progress",
+    "completedToday": "Completed Today",
+    "whatCompleted": "What tasks did you complete today?",
+    "tomorrowPlan": "Tomorrow's Plan",
+    "whatTomorrow": "What do you plan to do tomorrow?",
+    "saveAsDraft": "Save as Draft",
+    "submit": "Submit",
+    "success": "Success",
+    "draftSaved": "Draft saved successfully",
+    "submissionCreated": "Submission created successfully",
+    "error": "Error",
+    "fillRequired": "Please fill in all required fields",
+    "failedSaveDraft": "Failed to save draft",
+    "failedSubmit": "Failed to create submission",
+    "offlineCompanies": "Companies unavailable offline",
+    "saving": "Saving...",
+    "submitting": "Submitting...",
+    "offlineMode": "Offline Mode",
+    "offlineMessage": "You are currently offline. Some features may not be available."
+  },
+  "history": {
+    "title": "History",
+    "currentFilter": "🔽 Current Filter",
+    "clearAllFilters": "Clear All Filters",
+    "dateRange": "Date Range:",
+    "status": "Status:",
+    "allSubmissions": "All Submissions",
+    "dateRangeHeader": "📅 Date Range",
+    "from": "From",
+    "to": "To",
+    "thisMonth": "This Month",
+    "lastMonth": "Last Month",
+    "thisYear": "This Year",
+    "filterOptions": "Filter Options",
+    "submissionStatus": "Submission Status",
+    "allSubmissionsOption": "All submissions",
+    "submittedOption": "Submitted",
+    "draftOption": "Draft",
+    "approvedOption": "Approved",
+    "rejectedOption": "Rejected",
+    "allCompanies": "All companies",
+    "hoursRange": "Hours Range",
+    "minHours": "Min hours",
+    "maxHours": "Max hours",
+    "summaryCurrentFilter": "Summary (Current Filter)",
+    "applyFilter": "Apply Filter to Browse Tab",
+    "offlineCompanies": "Companies unavailable offline",
+    "applying": "Applying...",
+    "offlineMode": "Offline Mode",
+    "offlineMessage": "You are currently offline. Some features may not be available."
+  },
+  "userSearch": {
+    "searchWorkers": "Search for workers...",
+    "searchSupervisors": "Search for supervisors...",
+    "workers": "Workers",
+    "supervisors": "Supervisors",
+    "tooManyResults": "Too many results. Please refine your search.",
+    "noMatchingUsers": "No matching users found",
+    "noUsersFoundMessage": "No users found matching \"{query}\"",
+    "tryAdjustingSearch": "Try adjusting your search criteria",
+    "enterNameWorkers": "Enter a name to search for workers",
+    "enterNameSupervisors": "Enter a name to search for supervisors",
+    "searching": "Searching...",
+    "searchTooShort": "Please enter at least 2 characters to search",
+    "searchError": "Search Failed"
+  },
+  "browse": {
+    "offlineMode": "Offline Mode",
+    "offlineMessage": "You are currently offline. Some features may not be available.",
+    "error": "Error loading data",
+    "loading": "Loading submissions...",
+    "noSubmissions": "No submissions found",
+    "noSubmissionsMessage": "Start by creating your first submission to track your work progress."
+  },
+  "submissions": {
+    "title": "Submissions",
+    "loading": "Loading submissions...",
+    "refreshing": "Refreshing...",
+    "noSubmissions": "No Submissions",
+    "noSubmissionsMessage": "No submissions match your current filter settings.",
+    "failedToLoad": "Failed to load submissions",
+    "errorLoading": "Error loading submissions",
+    "pullToRefresh": "Pull to refresh",
+    "filterBy": "Filter by type",
+    "tabs": {
+      "inquiries": "Inquiries",
+      "dailyRecord": "Daily Record",
+      "interactionRecords": "Discussions",
+      "complaintDetails": "Notices"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "dashboard": "Notifications Dashboard",
+    "noNotifications": "No notifications",
+    "noUnreadNotifications": "No unread notifications",
+    "emptyState": "You're all caught up!",
+    "emptyStateMessage": "You're all caught up! No new notifications at this time.",
+    "markAsRead": "Mark as read",
+    "markAllAsRead": "Mark all as read",
+    "deleteNotification": "Delete notification",
+    "newNotification": "New notification",
+    "unreadCount": "{{count}} unread",
+    "loadingNotifications": "Loading notifications...",
+    "failedToLoad": "Failed to load notifications",
+    "failedToMarkRead": "Failed to mark as read",
+    "failedToDelete": "Failed to delete notification",
+    "notificationMarkedRead": "Notification marked as read",
+    "allNotificationsRead": "All notifications marked as read",
+    "notificationDeleted": "Notification deleted",
+    "offlineNotifications": "Notifications unavailable offline",
+    "refreshNotifications": "Refresh notifications",
+    "refreshing": "Refreshing...",
+    "pullToRefresh": "Pull to refresh",
+    "closePanel": "Close notifications",
+    "lastMessage": "Last message",
+    "updatedAt": "Updated",
+    "viewDetails": "View Details",
+    "noMessagePreview": "No message preview available",
+    "tapToViewDetails": "Tap to view details",
+    "timeAgo": {
+      "justNow": "Just now",
+      "minutesAgo": "{{count}}m ago",
+      "hoursAgo": "{{count}}h ago",
+      "daysAgo": "{{count}}d ago"
+    },
+    "detailDialog": {
+      "recordType": "Record Type",
+      "recordDetails": "Record Details",
+      "messageHistory": "Message History",
+      "noMessages": "No messages",
+      "markAsReadButton": "Mark as Read",
+      "markingAsRead": "Marking as read...",
+      "closeButton": "Close",
+      "successMarkedRead": "Successfully marked as read",
+      "errorMarkingRead": "Error marking as read",
+      "inquirerName": "Inquirer Name",
+      "contact": "Contact",
+      "dateOfInquiry": "Date of Inquiry",
+      "type": "Type",
+      "status": "Status",
+      "content": "Content",
+      "date": "Date",
+      "condition": "Condition",
+      "contactNumber": "Contact Number",
+      "feedback": "Feedback",
+      "location": "Location",
+      "means": "Means",
+      "description": "Description",
+      "responseDetails": "Response Details",
+      "name": "Name",
+      "title": "Title",
+      "dateOfOccurrence": "Date of Occurrence",
+      "personInvolved": "Person Involved",
+      "urgency": "Urgency",
+      "complainerName": "Notifier Name",
+      "photo": "Photo"
+    },
+    "openChatMessages": "Open Chat Messages",
+    "closeChatMessages": "Close Chat Messages",
+    "types": {
+      "inquiries": "Inquiry",
+      "daily_record": "Daily Record",
+      "interaction_records": "Discussion",
+      "complaint_details": "Notice"
+    }
+  },
+  "search": {
+    "title": "Search",
+    "searchPlaceholder": "Search across all records...",
+    "searching": "Searching...",
+    "noResults": "No results found",
+    "noResultsMessage": "Try different keywords or check your spelling",
+    "enterKeywords": "Enter keywords to search",
+    "resultsCount": "{{count}} results found",
+    "tableName": "Type",
+    "matchedFields": "Matched Fields",
+    "preview": "Preview",
+    "viewDetails": "View Details",
+    "failedToSearch": "Failed to perform search",
+    "offlineSearch": "Search unavailable offline",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "invalidDateRange": "Start date must be before or equal to end date",
+    "clearDates": "Clear dates",
+    "types": {
+      "inquiries": "Inquiry",
+      "daily_record": "Daily Record",
+      "interaction_records": "Discussion",
+      "complaint_details": "Notice"
+    }
+  },
+  "manuals": {
+    "title": "Manuals & Documents",
+    "searchPlaceholder": "Search documents...",
+    "loading": "Loading documents...",
+    "noDocuments": "No documents found",
+    "noDocumentsMessage": "No documents match your search",
+    "enterKeywords": "Enter keywords to search documents",
+    "failedToLoad": "Failed to load documents",
+    "offlineManuals": "Documents unavailable offline",
+    "placeholder": "Document browser coming soon",
+    "documentType": "Type",
+    "documentTitle": "Title",
+    "documentStatus": "Status",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "viewDocument": "View Document",
+    "noFileAvailable": "No file available for this document",
+    "failedToOpenDocument": "Failed to open document. Please try again.",
+    "noPDFViewer": "No PDF viewer app found. Please install a PDF reader app.",
+    "types": {
+      "STAFF": "Staff Document",
+      "PROPERTY": "Property Document",
+      "COMPANY": "Company Document",
+      "MANUAL": "User Manual"
+    },
+    "status": {
+      "ACTIVE": "Active",
+      "EXPIRED": "Expired",
+      "TERMINATED": "Terminated"
+    }
+  },
+  "enums": {
+    "urgencyLevel": {
+      "High": "High",
+      "Medium": "Medium",
+      "Low": "Low"
+    },
+    "interactionType": {
+      "DISCUSSION": "Discussion",
+      "INTERVIEW": "Interview",
+      "CONSULTATION": "Consultation",
+      "OTHER": "Other"
+    },
+    "interactionMeans": {
+      "FACE_TO_FACE": "Face-to-face",
+      "ONLINE": "Online",
+      "PHONE": "Phone",
+      "EMAIL": "Email"
+    },
+    "conditionStatus": {
+      "Excellent": "Excellent",
+      "Good": "Good",
+      "Fair": "Fair",
+      "Poor": "Poor"
+    },
+    "progressStatus": {
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In Progress",
+      "RESOLVED": "Resolved",
+      "CLOSED": "Closed",
+      "CANCELLED": "Cancelled"
+    },
+    "inquiryType": {
+      "GENERAL": "General",
+      "TECHNICAL": "Technical",
+      "BILLING": "Billing",
+      "SUPPORT": "Support",
+      "OTHER": "Other"
+    }
+  },
+  "forms": {
+    "validation": {
+      "minLength": "Must be at least {{min}} characters"
+    },
+    "swipeableDialog": {
+      "title": "Create New Record",
+      "swipeHint": "Swipe left or right to switch forms",
+      "confirmTitle": "Discard Changes?",
+      "confirmDiscard": "You have unsaved changes. Are you sure you want to discard them?",
+      "currentForm": "Current: {{formName}}",
+      "formIndicator": "{{current}} of {{total}}",
+      "submitting": "Submitting...",
+      "submitSuccess": "Record created successfully",
+      "submitError": "Failed to create record",
+      "validationError": "Please fill in all required fields",
+      "closeDialog": "Close",
+      "cancelButton": "Cancel"
+    },
+    "inquiry": {
+      "title": "Inquiry",
+      "fields": {
+        "dateOfInquiry": "Date of Inquiry",
+        "inquirerName": "Inquirer Name",
+        "inquirerContact": "Contact Information",
+        "typeOfInquiry": "Type of Inquiry",
+        "inquiryContent": "Inquiry Content"
+      },
+      "placeholders": {
+        "enterName": "Enter inquirer name",
+        "enterContact": "Enter contact information",
+        "enterType": "Enter inquiry type",
+        "enterContent": "Enter inquiry details"
+      },
+      "errors": {
+        "dateRequired": "Date is required",
+        "nameRequired": "Inquirer name is required",
+        "contactRequired": "Contact information is required",
+        "typeRequired": "Inquiry type is required",
+        "contentRequired": "Inquiry content is required",
+        "submitFailed": "Failed to submit inquiry"
+      }
+    },
+    "dailyRecord": {
+      "title": "Daily Record",
+      "fields": {
+        "dateOfRecord": "Date of Record",
+        "conditionStatus": "Condition Status",
+        "feedbackContent": "Feedback Content",
+        "contactNumber": "Contact Number"
+      },
+      "placeholders": {
+        "enterCondition": "Enter condition status",
+        "enterFeedback": "Enter feedback details",
+        "enterContact": "Enter contact number"
+      },
+      "errors": {
+        "dateRequired": "Date is required",
+        "conditionRequired": "Condition status is required",
+        "feedbackRequired": "Feedback content is required",
+        "submitFailed": "Failed to submit daily record"
+      }
+    },
+    "interactionRecord": {
+      "title": "Discussion",
+      "fields": {
+        "type": "Type",
+        "date": "Date",
+        "name": "Name",
+        "title": "Title",
+        "description": "Description",
+        "location": "Location",
+        "means": "Communication Method",
+        "responseDetails": "Response Details"
+      },
+      "placeholders": {
+        "enterType": "Enter interaction type",
+        "enterName": "Enter name",
+        "enterTitle": "Enter title",
+        "enterDescription": "Enter description",
+        "enterLocation": "Enter location",
+        "enterMeans": "Enter communication method",
+        "enterResponse": "Enter response details"
+      },
+      "errors": {
+        "typeRequired": "Type is required",
+        "dateRequired": "Date is required",
+        "descriptionRequired": "Description is required",
+        "submitFailed": "Failed to submit discussion form"
+      }
+    },
+    "complaintDetail": {
+      "title": "Notice",
+      "fields": {
+        "dateOfOccurrence": "Date of Occurrence",
+        "complainerName": "Notifier Name",
+        "complainerContact": "Contact Information",
+        "personInvolved": "Person Involved",
+        "urgencyLevel": "Urgency Level",
+        "complaintContent": "Notice Content"
+      },
+      "placeholders": {
+        "enterName": "Enter notifier name",
+        "enterContact": "Enter contact information",
+        "enterPerson": "Enter person involved",
+        "enterUrgency": "Enter urgency level (High/Medium/Low)",
+        "enterContent": "Enter notices"
+      },
+      "errors": {
+        "dateRequired": "Date is required",
+        "nameRequired": "Notifier name is required",
+        "contentRequired": "Notice content is required",
+        "urgencyRequired": "Urgency level is required",
+        "submitFailed": "Failed to submit notice"
+      }
+    }
+  },
+  "photoUpload": {
+    "labels": {
+      "photo": "Photo",
+      "tapToAdd": "Tap to add photo"
+    },
+    "actions": {
+      "takePhoto": "Take Photo",
+      "choosePhoto": "Choose Photo",
+      "removePhoto": "Remove Photo"
+    },
+    "selectSource": {
+      "title": "Select Photo Source",
+      "message": "Choose where to get the photo from",
+      "camera": "Take Photo",
+      "gallery": "Choose from Gallery"
+    },
+    "confirmRemove": {
+      "title": "Remove Photo",
+      "message": "Are you sure you want to remove this photo?"
+    },
+    "errors": {
+      "permissionDenied": "Permission Denied",
+      "permissionRequired": "Please allow access to your photo library",
+      "cameraPermissionRequired": "Please allow access to your camera",
+      "pickFailed": "Failed to select photo",
+      "captureFailed": "Failed to capture photo",
+      "uploadFailed": "Failed to upload photo"
+    },
+    "status": {
+      "uploading": "Uploading photo..."
+    }
+  },
+  "datePicker": {
+    "selectDate": "Select date",
+    "cancel": "Cancel",
+    "done": "Done",
+    "selectDateTitle": "Select Date",
+    "dayNames": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    },
+    "monthNames": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    }
+  }
+}
