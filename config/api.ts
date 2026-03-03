@@ -4,6 +4,8 @@
  */
 
 import Constants from "expo-constants";
+import * as Device from "expo-device";
+import { Platform } from "react-native";
 
 // Check if we're in development mode
 const isDev =
@@ -24,10 +26,36 @@ const getBaseUrl = (): string => {
     return process.env.DISPATCH_API_BASE_URL;
   }
 
-  // Default fallback
-  return isDev
-    ? "http://localhost:3000/api"
-    : "https://d3h9gio6m7s97q.cloudfront.net/api";
+  // Dynamic host detection for development (Emulators/Devices)
+  if (isDev) {
+    // Check if running on an Emulator/Simulator
+    if (!Device.isDevice) {
+      if (Platform.OS === 'android') {
+        return "http://10.0.2.2:3000/api";
+      }
+      if (Platform.OS === 'ios') {
+        return "http://localhost:3000/api";
+      }
+    }
+
+    // Physical Device: Get the host URI (LAN IP of the machine running the Expo server)
+    const hostUri = Constants.expoConfig?.hostUri;
+    if (hostUri) {
+      const ip = hostUri.split(":")[0];
+      return `http://${ip}:3001/api`; // Use port 3001 (Direct Backend)
+    }
+
+    // Default Fallbacks if detection fails or hostUri is missing
+    if (Platform.OS === 'android') {
+      return "http://10.0.2.2:3001/api"; // Use port 3001 (Direct Backend)
+    }
+
+    // Fallback for web/iOS
+    return "http://localhost:3000/api";
+  }
+
+  // Production URL
+  return "https://d3h9gio6m7s97q.cloudfront.net/api";
 };
 
 export const API_CONFIG = {

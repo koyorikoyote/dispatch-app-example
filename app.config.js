@@ -18,7 +18,7 @@ module.exports = ({ config }) => {
                 eas: {
                     projectId: "eb17ea4f-539f-4209-a435-353dcf4622eb"
                 },
-                DISPATCH_API_BASE_URL: process.env.DISPATCH_API_BASE_URL || (isDev ? "http://localhost:3000/api" : "https://d3h9gio6m7s97q.cloudfront.net/api")
+                DISPATCH_API_BASE_URL: process.env.DISPATCH_API_BASE_URL // Let api.ts handle fallbacks if not set env var
             },
             orientation: "portrait",
             icon: "./assets/icon.png",
@@ -41,6 +41,7 @@ module.exports = ({ config }) => {
                 },
                 package: "com.imas.crewapp",
                 versionCode: 1,
+                usesCleartextTraffic: true,
                 permissions: [
                     "CAMERA",
                     "READ_EXTERNAL_STORAGE",

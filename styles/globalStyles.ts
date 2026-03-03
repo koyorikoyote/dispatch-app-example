@@ -143,11 +143,11 @@ export const styles = StyleSheet.create({
   },
   sideMenu: {
     backgroundColor: "#1a1a1b",
-    height: Math.min(height * 0.68, height - 100), // Leave space for bottom nav (80px) + margin
+    height: Math.min(height * 0.85, height - 100),
     width: Math.min(width * 0.68, 280),
     borderRadius: 16,
     padding: 16,
-    marginBottom: 80, // Space for bottom navigation bar
+    marginBottom: 80,
     marginRight: 16,
     maxHeight: height - 100,
   },

@@ -32,6 +32,9 @@ yarn-error.*
 # local env files
 .env*.local
 
+# Terraform
+*.auto.tfvars
+
 # typescript
 *.tsbuildinfo
 

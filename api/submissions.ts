@@ -16,7 +16,7 @@ export const submissionsApi = {
     params?: SubmissionsParams,
     useCache: boolean = true
   ): Promise<PaginatedResponse<SubmissionRecord>> {
-    const enhancedParams = { ...params, type: "DISCUSSION" };
+    const enhancedParams = { ...params };
     const cacheKey = generateCacheKey("/mobile/submissions", enhancedParams);
 
     if (useCache) {
@@ -36,14 +36,18 @@ export const submissionsApi = {
       throw new Error("Failed to fetch submissions");
     }
 
+    // Handle both nested { data: [], pagination: {} } and flat { data: [], pagination: {} } responses safely
+    const actualData = Array.isArray(response.data) ? response.data : (response.data?.data || []);
+    const actualPagination = (response as any).pagination || response.data?.pagination || {
+      page: 1,
+      limit: 20,
+      total: 0,
+      totalPages: 0,
+    };
+
     const result: PaginatedResponse<SubmissionRecord> = {
-      data: response.data || [],
-      pagination: (response as any).pagination || {
-        page: 1,
-        limit: 20,
-        total: 0,
-        totalPages: 0,
-      },
+      data: actualData,
+      pagination: actualPagination,
     };
 
     await ApiCache.set(cacheKey, result);

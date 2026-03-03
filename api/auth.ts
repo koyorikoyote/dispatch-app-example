@@ -16,28 +16,28 @@ export const authApi = {
       ENDPOINTS.AUTH.LOGIN,
       credentials
     );
-    
+
     if (!resp.success || !resp.data?.token) {
       throw new Error(resp.error || 'Login failed');
     }
-    
+
     // Store the token automatically
     await apiClient.setAuthToken(resp.data.token);
-    
+
     return resp.data;
   },
 
   /**
    * Logout current user
    */
-  async logout(): Promise<void> {
+  async logout(refreshToken?: string): Promise<void> {
     const token = await apiClient.getAuthToken();
-    if (!token) {
+    if (!token && !refreshToken) {
       return; // Already logged out
     }
 
     try {
-      await apiClient.post(ENDPOINTS.AUTH.LOGOUT, { token });
+      await apiClient.post(ENDPOINTS.AUTH.LOGOUT, { refreshToken });
     } catch (error) {
       // Continue with logout even if API call fails
       console.warn('Logout API call failed:', error);
@@ -50,18 +50,19 @@ export const authApi = {
   /**
    * Refresh authentication token
    */
-  async refreshToken(): Promise<LoginResponse> {
+  async refreshToken(refreshToken: string): Promise<LoginResponse> {
     const resp = await apiClient.post<ApiResponse<LoginResponse>>(
-      ENDPOINTS.AUTH.REFRESH
+      ENDPOINTS.AUTH.REFRESH,
+      { refreshToken }
     );
-    
+
     if (!resp.success || !resp.data?.token) {
       throw new Error(resp.error || 'Token refresh failed');
     }
-    
+
     // Update stored token
     await apiClient.setAuthToken(resp.data.token);
-    
+
     return resp.data;
   },
 

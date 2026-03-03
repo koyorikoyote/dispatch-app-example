@@ -156,20 +156,20 @@ export class Validator {
    */
   private static getPatternErrorMessage(fieldName: string, pattern: RegExp): string {
     const formattedName = this.formatFieldName(fieldName);
-    
+
     // Common pattern error messages
     if (pattern.source.includes('@')) {
       return `${formattedName} must be a valid email address`;
     }
-    
+
     if (pattern.source.includes('\\d')) {
       return `${formattedName} must contain only numbers`;
     }
-    
+
     if (pattern.source.includes('[a-zA-Z]')) {
       return `${formattedName} must contain only letters`;
     }
-    
+
     return `${formattedName} format is invalid`;
   }
 }
@@ -245,16 +245,16 @@ export const SubmissionValidationRules = {
     ...CommonValidationRules.date,
     custom: (value: string) => {
       if (!value) return null;
-      
+
       const submissionDate = new Date(value);
       const today = new Date();
       const maxFutureDate = new Date();
       maxFutureDate.setDate(today.getDate() + 30);
-      
+
       if (submissionDate > maxFutureDate) {
         return 'Submission date cannot be more than 30 days in the future';
       }
-      
+
       return null;
     },
   },
@@ -263,14 +263,14 @@ export const SubmissionValidationRules = {
     ...CommonValidationRules.time,
     custom: (value: string, data?: any) => {
       if (!value || !data?.startTime) return null;
-      
+
       const start = new Date(`2000-01-01T${data.startTime}:00`);
       const end = new Date(`2000-01-01T${value}:00`);
-      
+
       if (start >= end) {
         return 'End time must be after start time';
       }
-      
+
       return null;
     },
   },
@@ -299,13 +299,13 @@ export const SubmissionValidationRules = {
  */
 export const validateSubmission = (data: any): ValidationResult => {
   const rules = { ...SubmissionValidationRules };
-  
+
   // Add cross-field validation for end time
   if (rules.endTime?.custom) {
     const originalCustom = rules.endTime.custom;
     rules.endTime.custom = (value: string) => originalCustom(value, data);
   }
-  
+
   return Validator.validateFields(data, rules);
 };
 
@@ -313,18 +313,18 @@ export const validateSubmission = (data: any): ValidationResult => {
  * Validate user data
  */
 export const validateUser = (data: any, isUpdate: boolean = false): ValidationResult => {
-  const rules = {
+  const rules: Record<string, ValidationRule> = {
     name: isUpdate ? { ...CommonValidationRules.name, required: false } : CommonValidationRules.name,
     email: isUpdate ? { ...CommonValidationRules.email, required: false } : CommonValidationRules.email,
     phone: CommonValidationRules.phone,
     address: CommonValidationRules.address,
   };
-  
+
   if (!isUpdate) {
     rules.username = CommonValidationRules.username;
     rules.password = CommonValidationRules.password;
   }
-  
+
   return Validator.validateFields(data, rules);
 };
 
@@ -339,7 +339,7 @@ export const validateCompany = (data: any, isUpdate: boolean = false): Validatio
     email: { ...CommonValidationRules.email, required: false },
     contactPerson: { maxLength: 100 },
   };
-  
+
   return Validator.validateFields(data, rules);
 };
 

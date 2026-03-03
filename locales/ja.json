@@ -1,5 +1,6 @@
 {
   "common": {
+    "appName": "Dispatch",
     "actions": {
       "save": "保存",
       "cancel": "キャンセル",
@@ -292,6 +293,11 @@
       "interactionRecords": "相談",
       "complaintDetails": "届け出"
     }
+  },
+  "dateFilter": {
+    "last7days": "過去7日間",
+    "month": "月",
+    "year": "年"
   },
   "notifications": {
     "title": "通知",

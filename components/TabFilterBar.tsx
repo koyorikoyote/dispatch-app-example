@@ -1,7 +1,7 @@
 "use client"
 
 import { memo } from "react"
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import { useTheme } from "../contexts/ThemeContext"
 import { useLanguage } from "../contexts/LanguageContext"
@@ -51,16 +51,22 @@ export const TabFilterBar = memo(function TabFilterBar({ filters, onFilterChange
 
     return (
         <View style={styles.container}>
-            <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.scrollContent}
-            >
+            <View style={styles.scrollContent}>
                 {tabs.map((tab) => {
                     const isActive = filters[tab.key]
                     const tabStyle = {
                         ...styles.tab,
-                        backgroundColor: isActive ? "#3b82f6" : "transparent",
+                        backgroundColor: isActive
+                            ? "#3b82f6"
+                            : isDarkMode
+                                ? "rgba(255,255,255,0.06)"
+                                : "rgba(0,0,0,0.04)",
+                        borderWidth: 1,
+                        borderColor: isActive
+                            ? "#3b82f6"
+                            : isDarkMode
+                                ? "rgba(255,255,255,0.12)"
+                                : "rgba(0,0,0,0.10)",
                     }
                     const iconColor = isActive ? "#fff" : isDarkMode ? "#aaa" : "#666"
                     const textColor = isActive ? "#fff" : isDarkMode ? "#aaa" : "#666"
@@ -97,39 +103,41 @@ export const TabFilterBar = memo(function TabFilterBar({ filters, onFilterChange
                         </TouchableOpacity>
                     )
                 })}
-            </ScrollView>
+            </View>
         </View>
     )
 })
 
 const styles = StyleSheet.create({
     container: {
-        borderBottomWidth: 1,
-        borderBottomColor: "rgba(0, 0, 0, 0.1)",
+        borderTopWidth: 1,
+        borderTopColor: "rgba(0, 0, 0, 0.1)",
     },
     scrollContent: {
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        gap: 8,
-        flexGrow: 1,
-        justifyContent: "center",
+        flexDirection: "row",
+        paddingHorizontal: 8,
+        paddingVertical: 8,
+        gap: 6,
     },
     tab: {
+        flex: 1,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        paddingHorizontal: 10,
+        paddingHorizontal: 4,
         paddingVertical: 8,
         borderRadius: 18,
-        width: 90,
+        minWidth: 0,
     },
     tabIcon: {
-        marginRight: 4,
+        marginRight: 3,
         flexShrink: 0,
     },
     textContainer: {
         justifyContent: "center",
         alignItems: "center",
+        flexShrink: 1,
+        minWidth: 0,
     },
     tabText: {
         textAlign: "center",

@@ -76,11 +76,11 @@ export function DailyRecordForm({ onSuccess, onDirtyChange }: DailyRecordFormPro
         if (!formData.feedbackContent?.trim()) {
             newErrors.feedbackContent = t("forms.dailyRecord.errors.feedbackRequired")
         }
-        if (formData.feedbackContent && formData.feedbackContent.trim().length < 10) {
-            newErrors.feedbackContent = t("forms.validation.minLength", { min: 10 })
+        if (formData.feedbackContent && formData.feedbackContent.trim().length < 2) {
+            newErrors.feedbackContent = t("forms.validation.minLength", { min: 2 })
         }
-        if (formData.contactNumber && formData.contactNumber.length < 10) {
-            newErrors.contactNumber = t("forms.validation.minLength", { min: 10 })
+        if (formData.contactNumber && formData.contactNumber.length < 2) {
+            newErrors.contactNumber = t("forms.validation.minLength", { min: 2 })
         }
 
         setErrors(newErrors)

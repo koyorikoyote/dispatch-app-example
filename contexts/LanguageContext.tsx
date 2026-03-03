@@ -37,23 +37,23 @@ const translations = {
 const getDeviceLanguage = (): Language => {
   // For iOS
   if (Platform.OS === 'ios') {
-    const locale = 
-      NativeModules.SettingsManager.settings.AppleLocale || 
+    const locale =
+      NativeModules.SettingsManager.settings.AppleLocale ||
       NativeModules.SettingsManager.settings.AppleLanguages[0] // iOS 13+
-    
+
     return locale.startsWith('ja') ? 'ja' : 'en'
-  } 
+  }
   // For Android
   else if (Platform.OS === 'android') {
     const locale = NativeModules.I18nManager.localeIdentifier
-    return locale.startsWith('ja') ? 'ja' : 'en'
-  } 
+    return (locale && locale.startsWith('ja')) ? 'ja' : 'en'
+  }
   // For web
   else if (Platform.OS === 'web' && typeof navigator !== 'undefined') {
     const browserLang = navigator.language || (navigator as any).userLanguage
-    return browserLang.startsWith('ja') ? 'ja' : 'en'
+    return (browserLang && browserLang.startsWith('ja')) ? 'ja' : 'en'
   }
-  
+
   // Default fallback
   return 'en'
 }
@@ -99,7 +99,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const keys = key.split('.')
     let value: any = translations[lang]
     let foundInCurrentLang = true
-    
+
     // Try to find the key in current language
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
@@ -109,7 +109,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         break
       }
     }
-    
+
     // If not found in current language, try English fallback
     if (!foundInCurrentLang || typeof value !== 'string') {
       value = translations.en
@@ -128,19 +128,19 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         }
       }
     }
-    
+
     if (typeof value !== 'string') {
       if (__DEV__) {
         console.warn(`🌐 Translation key "${key}" does not resolve to string, got:`, typeof value)
       }
       return key
     }
-    
+
     // Log warning if key was found in fallback but not current language
     if (!foundInCurrentLang && __DEV__) {
       console.warn(`🌐 Translation key "${key}" missing in ${lang}, using English fallback`)
     }
-    
+
     // Handle variable interpolation with {{variable}} syntax
     if (vars) {
       let text = value
@@ -149,7 +149,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       }
       return text
     }
-    
+
     return value
   }
 
@@ -160,9 +160,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <LanguageContext.Provider value={{ 
-      lang, 
-      setLang, 
+    <LanguageContext.Provider value={{
+      lang,
+      setLang,
       t,
       // Backward compatibility properties
       language: lang,

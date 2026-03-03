@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons"
 import { useTheme } from "../contexts/ThemeContext"
 import { useLanguage } from "../contexts/LanguageContext"
 import { useRefresh } from "../contexts/RefreshContext"
+import { useAuth } from "../contexts/AuthContext"
 import { submissionsApi } from "../api/submissions"
 import type { SubmissionRecord } from "../types/records"
 import { EmptyState } from "../components/EmptyState"
@@ -17,13 +18,22 @@ import {
     type TabFilters,
     DEFAULT_TAB_FILTERS,
     saveToggleStates,
-    loadToggleStates
+    loadToggleStates,
+    saveDateFilter,
+    loadDateFilter,
 } from "../utils/statePersistence"
+import {
+    DateFilterWidget,
+    getDefaultDateFilter,
+    getDateRange,
+    type DateFilterState,
+} from "../components/DateFilterWidget"
 
 export default function SubmissionsPage() {
     const { isDarkMode } = useTheme()
     const { t } = useLanguage()
     const { refreshTrigger } = useRefresh()
+    const { user } = useAuth()
     const [submissions, setSubmissions] = useState<SubmissionRecord[]>([])
     const [loading, setLoading] = useState(true)
     const [refreshing, setRefreshing] = useState(false)
@@ -35,6 +45,7 @@ export default function SubmissionsPage() {
     const [totalPages, setTotalPages] = useState(1)
     const [selectedSubmission, setSelectedSubmission] = useState<SubmissionRecord | null>(null)
     const [showDetailDialog, setShowDetailDialog] = useState(false)
+    const [dateFilter, setDateFilter] = useState<DateFilterState>(getDefaultDateFilter())
     const appState = useRef(AppState.currentState)
     const PAGE_LIMIT = 20
 
@@ -45,14 +56,23 @@ export default function SubmissionsPage() {
 
     useEffect(() => {
         loadTabFilters()
-        fetchSubmissions()
+        loadSavedDateFilter()
+
+        if (user?.id) {
+            setLoading(true)
+            setCurrentPage(1)
+            setHasMore(true)
+            fetchSubmissions(1, false)
+        } else {
+            setSubmissions([])
+        }
 
         const subscription = AppState.addEventListener("change", handleAppStateChange)
 
         return () => {
             subscription.remove()
         }
-    }, [])
+    }, [user?.id])
 
     useEffect(() => {
         if (refreshTrigger > 0) {
@@ -77,6 +97,15 @@ export default function SubmissionsPage() {
         } catch (error) {
             console.error("Failed to load tab filters:", error)
             setTabFilters(DEFAULT_TAB_FILTERS)
+        }
+    }
+
+    const loadSavedDateFilter = async () => {
+        try {
+            const saved = await loadDateFilter()
+            if (saved) setDateFilter(saved)
+        } catch (error) {
+            console.error("Failed to load date filter:", error)
         }
     }
 
@@ -174,11 +203,19 @@ export default function SubmissionsPage() {
         saveTabFilters(newFilters)
     }, [tabFilters])
 
+    const handleDateFilterChange = (newFilter: DateFilterState) => {
+        setDateFilter(newFilter)
+        saveDateFilter(newFilter)
+    }
+
     const filteredSubmissions = useMemo(() => {
+        const { start, end } = getDateRange(dateFilter)
         return submissions.filter((submission) => {
-            return tabFilters[submission.tableName]
+            if (!tabFilters[submission.tableName]) return false
+            const created = new Date(submission.createdAt)
+            return created >= start && created <= end
         })
-    }, [submissions, tabFilters])
+    }, [submissions, tabFilters, dateFilter])
 
     if (loading) {
         return (
@@ -210,10 +247,9 @@ export default function SubmissionsPage() {
 
     return (
         <View style={containerStyle}>
-            <TabFilterBar
-                filters={tabFilters}
-                onFilterChange={handleFilterChange}
-            />
+            <View style={styles.dateFilterRow}>
+                <DateFilterWidget filter={dateFilter} onChange={handleDateFilterChange} />
+            </View>
             {filteredSubmissions.length === 0 ? (
                 <EmptyState
                     icon="document-text-outline"
@@ -276,6 +312,13 @@ export default function SubmissionsPage() {
                 </ScrollView>
             )}
 
+            <View style={styles.filterBarWrapper}>
+                <TabFilterBar
+                    filters={tabFilters}
+                    onFilterChange={handleFilterChange}
+                />
+            </View>
+
             <SubmissionDetailDialog
                 visible={showDetailDialog}
                 submission={selectedSubmission}
@@ -295,7 +338,8 @@ const styles = StyleSheet.create({
     scrollView: {
         flex: 1,
         padding: 16,
-        paddingBottom: 80,
+        paddingTop: 2,
+        paddingBottom: 16,
     },
     loadMoreButton: {
         flexDirection: "row",
@@ -310,5 +354,14 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: "600",
         marginLeft: 8,
+    },
+    filterBarWrapper: {
+        marginBottom: 80,
+    },
+    dateFilterRow: {
+        alignItems: "flex-start",
+        paddingHorizontal: 16,
+        paddingTop: 8,
+        paddingBottom: 2,
     },
 })

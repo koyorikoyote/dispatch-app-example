@@ -24,7 +24,7 @@ interface RetryOptions {
   maxRetries?: number;
   delay?: number;
   exponentialBackoff?: boolean;
-  retryCondition?: (error: any) => boolean;
+  retryCondition?: (error: any, retryCount: number, maxRetries: number) => boolean;
 }
 
 export const useErrorHandler = (): UseErrorHandlerReturn => {
@@ -46,7 +46,7 @@ export const useErrorHandler = (): UseErrorHandlerReturn => {
     const processedError = ErrorHandler.processError(err);
     const message = customMessage || processedError.message;
     setError(message);
-    
+
     // Log error for debugging
     ErrorHandler.logError(err, 'useErrorHandler');
   }, []);
@@ -55,7 +55,7 @@ export const useErrorHandler = (): UseErrorHandlerReturn => {
     setError(null);
     setRetryCount(0);
     setIsRetrying(false);
-    
+
     // Clear any pending retry timeout
     if (retryTimeoutRef.current) {
       clearTimeout(retryTimeoutRef.current);
@@ -65,7 +65,7 @@ export const useErrorHandler = (): UseErrorHandlerReturn => {
 
   const showErrorAlert = useCallback((err: any, customMessage?: string) => {
     const message = getErrorMessage(err, customMessage);
-    
+
     Alert.alert('Error', message, [
       { text: 'OK', onPress: clearError }
     ]);
@@ -81,7 +81,7 @@ export const useErrorHandler = (): UseErrorHandlerReturn => {
   }, []);
 
   const retryOperation = useCallback(async (
-    operation: () => Promise<any>, 
+    operation: () => Promise<any>,
     options: RetryOptions = {}
   ): Promise<any> => {
     const {
@@ -103,29 +103,29 @@ export const useErrorHandler = (): UseErrorHandlerReturn => {
         if (currentRetryCount > 0) {
           setError(null);
         }
-        
+
         const result = await operation();
-        
+
         // Success - clear retry state
         setIsRetrying(false);
         setRetryCount(0);
-        
+
         return result;
       } catch (error) {
         lastError = error;
-        
+
         // Check if we should retry
         if (currentRetryCount < maxRetries && retryCondition(error, currentRetryCount, maxRetries)) {
           currentRetryCount++;
           setRetryCount(currentRetryCount);
           setIsRetrying(true);
-          
+
           // Calculate delay with exponential backoff
           const processedError = ErrorHandler.processError(error);
-          const retryDelay = exponentialBackoff 
+          const retryDelay = exponentialBackoff
             ? ErrorHandler.getRetryDelay(processedError, currentRetryCount - 1)
             : delay;
-          
+
           // Check network status before retrying
           const networkState = await NetInfo.fetch();
           if (!networkState.isConnected) {
@@ -139,12 +139,12 @@ export const useErrorHandler = (): UseErrorHandlerReturn => {
               });
             });
           }
-          
+
           // Wait before retrying
           await new Promise(resolve => {
             retryTimeoutRef.current = setTimeout(resolve, retryDelay);
           });
-          
+
           if (ENV_CONFIG.enableApiLogging) {
             console.log(`Retrying operation (attempt ${currentRetryCount}/${maxRetries}) after ${retryDelay}ms`);
           }
@@ -186,7 +186,7 @@ export const useNetworkErrorHandler = () => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setIsOffline(!state.isConnected);
     });
-    
+
     // Get initial state
     NetInfo.fetch().then(state => {
       setIsOffline(!state.isConnected);
@@ -225,9 +225,9 @@ export const useNetworkErrorHandler = () => {
         if (error?.isNetworkError || error?.code === 'NETWORK_ERROR' || isOffline) {
           return retryCount < maxRetries;
         }
-        
+
         // Use default retry logic for other errors
-        return options.retryCondition ? 
+        return options.retryCondition ?
           options.retryCondition(error, retryCount, maxRetries) :
           retryCount < maxRetries && (error?.response?.status >= 500 || !error?.response);
       }

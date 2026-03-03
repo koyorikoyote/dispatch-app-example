@@ -5,7 +5,9 @@ import { View, ScrollView, RefreshControl, StyleSheet, AppState, AppStateStatus 
 import { useTheme } from "../contexts/ThemeContext"
 import { useLanguage } from "../contexts/LanguageContext"
 import { useRefresh } from "../contexts/RefreshContext"
+import { useAuth } from "../contexts/AuthContext"
 import { notificationsApi } from "../api/notifications"
+import { connectNotificationStream } from "../api/notificationStream"
 import type { Notification } from "../types/notifications"
 import { messageRepliesApi } from "../api/messageReplies"
 import { NotificationCard } from "../components/NotificationCard"
@@ -13,12 +15,11 @@ import { NotificationDetailDialog } from "../components/NotificationDetailDialog
 import { EmptyState } from "../components/EmptyState"
 import { NotificationCardSkeleton } from "../components/SkeletonLoader"
 
-const POLLING_INTERVAL = 30000
-
 export default function NotificationsDashboard() {
     const { isDarkMode } = useTheme()
     const { t } = useLanguage()
     const { refreshTrigger } = useRefresh()
+    const { user } = useAuth()
     const [notifications, setNotifications] = useState<Notification[]>([])
     const [loading, setLoading] = useState(true)
     const [refreshing, setRefreshing] = useState(false)
@@ -26,62 +27,15 @@ export default function NotificationsDashboard() {
     const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null)
     const [dialogVisible, setDialogVisible] = useState(false)
     const appState = useRef(AppState.currentState)
-    const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null)
+    const disconnectRef = useRef<(() => void) | null>(null)
 
     const containerStyle = {
         ...styles.container,
         backgroundColor: isDarkMode ? "#1a1a1b" : "#ffffff",
     }
 
-    useEffect(() => {
-        fetchNotifications()
-
-        const subscription = AppState.addEventListener("change", handleAppStateChange)
-
-        startPolling()
-
-        return () => {
-            subscription.remove()
-            stopPolling()
-        }
-    }, [])
-
-    useEffect(() => {
-        if (refreshTrigger > 0) {
-            refreshDashboard()
-        }
-    }, [refreshTrigger])
-
-    const startPolling = () => {
-        stopPolling()
-        pollingIntervalRef.current = setInterval(() => {
-            if (appState.current === "active") {
-                fetchNotifications()
-            }
-        }, POLLING_INTERVAL)
-    }
-
-    const stopPolling = () => {
-        if (pollingIntervalRef.current) {
-            clearInterval(pollingIntervalRef.current)
-            pollingIntervalRef.current = null
-        }
-    }
-
-    const handleAppStateChange = (nextAppState: AppStateStatus) => {
-        if (
-            appState.current.match(/inactive|background/) &&
-            nextAppState === "active"
-        ) {
-            refreshDashboard()
-            startPolling()
-        } else if (nextAppState.match(/inactive|background/)) {
-            stopPolling()
-        }
-        appState.current = nextAppState
-    }
-
-    const fetchNotifications = async () => {
+    // Load initial data via REST — always works in React Native
+    const fetchInitial = useCallback(async () => {
         try {
             setError(null)
             const data = await notificationsApi.fetchNotifications()
@@ -92,16 +46,80 @@ export default function NotificationsDashboard() {
             setLoading(false)
             setRefreshing(false)
         }
+    }, [t])
+
+    // Attach SSE stream for live background updates (best-effort; degrades silently)
+    const attachStream = useCallback(() => {
+        if (disconnectRef.current) {
+            disconnectRef.current()
+            disconnectRef.current = null
+        }
+
+        const { disconnect } = connectNotificationStream(
+            (event) => {
+                if (event.type === "snapshot" || event.type === "update") {
+                    setNotifications(event.notifications ?? [])
+                }
+            },
+            (_err) => {
+                // SSE unavailable — REST + pull-to-refresh still works
+            }
+        )
+
+        disconnectRef.current = disconnect
+    }, [])
+
+    const stopStream = useCallback(() => {
+        if (disconnectRef.current) {
+            disconnectRef.current()
+            disconnectRef.current = null
+        }
+    }, [])
+
+    useEffect(() => {
+        if (user?.id) {
+            setLoading(true)
+            // Step 1: immediate REST load to clear loading state
+            fetchInitial().then(() => {
+                // Step 2: layer SSE on top for live updates
+                attachStream()
+            })
+        } else {
+            setNotifications([])
+            stopStream()
+        }
+
+        const subscription = AppState.addEventListener("change", handleAppStateChange)
+
+        return () => {
+            subscription.remove()
+            stopStream()
+        }
+    }, [user?.id])
+
+    useEffect(() => {
+        if (refreshTrigger > 0) {
+            handlePullRefresh()
+        }
+    }, [refreshTrigger])
+
+    const handleAppStateChange = (nextAppState: AppStateStatus) => {
+        if (
+            appState.current.match(/inactive|background/) &&
+            nextAppState === "active"
+        ) {
+            fetchInitial().then(() => attachStream())
+        } else if (nextAppState.match(/inactive|background/)) {
+            stopStream()
+        }
+        appState.current = nextAppState
     }
 
-    const refreshDashboard = useCallback(() => {
-        fetchNotifications()
-    }, [])
-
-    const handleRefresh = useCallback(() => {
+    const handlePullRefresh = useCallback(async () => {
         setRefreshing(true)
-        fetchNotifications()
-    }, [])
+        await fetchInitial()
+        attachStream()
+    }, [fetchInitial, attachStream])
 
     const handleCardClick = (notification: Notification) => {
         setSelectedNotification(notification)
@@ -111,7 +129,6 @@ export default function NotificationsDashboard() {
     const handleCloseDialog = () => {
         setDialogVisible(false)
         setSelectedNotification(null)
-        refreshDashboard()
     }
 
     const handleMarkAsRead = async (messageReplyId: number) => {
@@ -129,10 +146,10 @@ export default function NotificationsDashboard() {
 
         try {
             await messageRepliesApi.markAsRead(messageReplyId)
-        } catch (error: any) {
-            console.error("Failed to mark as read:", error)
-            refreshDashboard()
-            throw error
+        } catch (err: any) {
+            console.error("Failed to mark as read:", err)
+            fetchInitial()
+            throw err
         }
     }
 
@@ -158,7 +175,7 @@ export default function NotificationsDashboard() {
                     title={t("common.status.error")}
                     message={error}
                     actionText={t("common.actions.retry")}
-                    onAction={fetchNotifications}
+                    onAction={fetchInitial}
                 />
             </View>
         )
@@ -183,7 +200,7 @@ export default function NotificationsDashboard() {
                 refreshControl={
                     <RefreshControl
                         refreshing={refreshing}
-                        onRefresh={handleRefresh}
+                        onRefresh={handlePullRefresh}
                         tintColor="#ff4500"
                         colors={["#ff4500"]}
                     />

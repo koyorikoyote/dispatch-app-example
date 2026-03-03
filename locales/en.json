@@ -1,5 +1,6 @@
 {
   "common": {
+    "appName": "Dispatch",
     "actions": {
       "save": "Save",
       "cancel": "Cancel",
@@ -293,6 +294,11 @@
       "complaintDetails": "Notices"
     }
   },
+  "dateFilter": {
+    "last7days": "Last 7 Days",
+    "month": "Month",
+    "year": "Year"
+  },
   "notifications": {
     "title": "Notifications",
     "dashboard": "Notifications Dashboard",
@@ -507,7 +513,7 @@
       }
     },
     "dailyRecord": {
-      "title": "Daily Record",
+      "title": "Daily Rec",
       "fields": {
         "dateOfRecord": "Date of Record",
         "conditionStatus": "Condition Status",
@@ -527,7 +533,7 @@
       }
     },
     "interactionRecord": {
-      "title": "Discussion",
+      "title": "Discuss",
       "fields": {
         "type": "Type",
         "date": "Date",

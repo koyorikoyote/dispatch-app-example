@@ -77,11 +77,11 @@ export function InteractionRecordForm({ onSuccess, onDirtyChange }: InteractionR
         if (!formData.description?.trim()) {
             newErrors.description = t("forms.interactionRecord.errors.descriptionRequired")
         }
-        if (formData.description && formData.description.trim().length < 10) {
-            newErrors.description = t("forms.validation.minLength", { min: 10 })
+        if (formData.description && formData.description.trim().length < 2) {
+            newErrors.description = t("forms.validation.minLength", { min: 2 })
         }
-        if (formData.responseDetails && formData.responseDetails.trim().length < 10) {
-            newErrors.responseDetails = t("forms.validation.minLength", { min: 10 })
+        if (formData.responseDetails && formData.responseDetails.trim().length < 2) {
+            newErrors.responseDetails = t("forms.validation.minLength", { min: 2 })
         }
 
         setErrors(newErrors)

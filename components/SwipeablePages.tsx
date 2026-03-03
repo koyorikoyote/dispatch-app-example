@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect, ReactNode } from "react"
-import { View, StyleSheet, Dimensions, Animated } from "react-native"
+import { View, StyleSheet, Dimensions, Animated, Platform } from "react-native"
 import { Gesture, GestureDetector } from "react-native-gesture-handler"
 import { saveNavigationState, loadNavigationState } from "../utils/statePersistence"
 import { useTheme } from "../contexts/ThemeContext"
@@ -152,6 +152,7 @@ export function SwipeablePages({
     }
 
     const panGesture = Gesture.Pan()
+        .runOnJS(Platform.OS !== "web")
         .activeOffsetX([-5, 5])
         .failOffsetY([-30, 30])
         .maxPointers(1)
@@ -267,7 +268,7 @@ export function SwipeablePages({
                     </Animated.View>
                 </GestureDetector>
             </View>
-            <View style={styles.pageIndicatorContainer}>
+            <View style={styles.pageIndicatorContainer} pointerEvents="none">
                 {pages.map((_, index) => (
                     <View
                         key={index}
@@ -319,8 +320,6 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 16,
         gap: 6,
-        backgroundColor: "rgba(0, 0, 0, 0.05)",
-        borderRadius: 12,
         alignSelf: "center",
     },
     pageIndicator: {

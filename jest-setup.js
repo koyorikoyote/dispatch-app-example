@@ -3,83 +3,7 @@ jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock')
 );
 
-// Mock React Native modules
-jest.mock('react-native', () => {
-  const React = require('react');
-  
-  const mockComponent = (name) => {
-    const Component = React.forwardRef((props, ref) => {
-      return React.createElement(name, { ...props, ref });
-    });
-    Component.displayName = name;
-    return Component;
-  };
 
-  return {
-    Platform: {
-      OS: 'web',
-      select: jest.fn((obj) => obj.web || obj.default),
-    },
-    NativeModules: {
-      SettingsManager: {
-        settings: {
-          AppleLocale: 'en_US',
-          AppleLanguages: ['en'],
-        },
-      },
-      I18nManager: {
-        localeIdentifier: 'en_US',
-      },
-    },
-    TurboModuleRegistry: {
-      getEnforcing: jest.fn(() => ({})),
-      get: jest.fn(() => ({})),
-    },
-    // Mock React Native components as proper React components
-    View: mockComponent('View'),
-    Text: mockComponent('Text'),
-    ScrollView: mockComponent('ScrollView'),
-    FlatList: mockComponent('FlatList'),
-    TouchableOpacity: mockComponent('TouchableOpacity'),
-    TouchableHighlight: mockComponent('TouchableHighlight'),
-    TouchableWithoutFeedback: mockComponent('TouchableWithoutFeedback'),
-    Pressable: mockComponent('Pressable'),
-    TextInput: mockComponent('TextInput'),
-    Image: mockComponent('Image'),
-    SafeAreaView: mockComponent('SafeAreaView'),
-    StatusBar: mockComponent('StatusBar'),
-    ActivityIndicator: mockComponent('ActivityIndicator'),
-    Modal: mockComponent('Modal'),
-    Switch: mockComponent('Switch'),
-    StyleSheet: {
-      create: jest.fn((styles) => styles),
-      flatten: jest.fn((style) => style),
-    },
-    Dimensions: {
-      get: jest.fn(() => ({ width: 375, height: 812 })),
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-    },
-    Animated: {
-      View: mockComponent('Animated.View'),
-      Text: mockComponent('Animated.Text'),
-      Value: jest.fn(() => ({
-        setValue: jest.fn(),
-        addListener: jest.fn(),
-        removeListener: jest.fn(),
-      })),
-      timing: jest.fn(() => ({
-        start: jest.fn(),
-      })),
-    },
-    Easing: {
-      linear: jest.fn(),
-      ease: jest.fn(),
-      quad: jest.fn(),
-      cubic: jest.fn(),
-    },
-  };
-});
 
 // Mock Expo modules
 jest.mock('expo-router', () => ({
@@ -157,4 +81,4 @@ global.console = {
 global.__DEV__ = true;
 
 // Setup React Native Testing Library matchers
-import '@testing-library/react-native/extend-expect';
+require('@testing-library/react-native/extend-expect');

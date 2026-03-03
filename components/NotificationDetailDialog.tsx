@@ -124,13 +124,24 @@ export function NotificationDetailDialog({
         }
     }
 
-    const formatDateToYYYYMMDD = (dateString: string) => {
-        const date = new Date(dateString)
-        const year = date.getFullYear()
-        const month = String(date.getMonth() + 1).padStart(2, "0")
-        const day = String(date.getDate()).padStart(2, "0")
-        return `${year}/${month}/${day}`
+    const formatDateToYYYYMMDD = (dateString: string | null | undefined) => {
+        if (!dateString) return null
+        try {
+            const date = new Date(dateString)
+            // Check for invalid date
+            if (isNaN(date.getTime())) return String(dateString)
+
+            const year = date.getFullYear()
+            const month = String(date.getMonth() + 1).padStart(2, "0")
+            const day = String(date.getDate()).padStart(2, "0")
+            return `${year}/${month}/${day}`
+        } catch (e) {
+            console.error("Date formatting error:", e)
+            return String(dateString)
+        }
     }
+
+    console.log("[NotificationDetail] Rendering with:", notification ? { id: notification.recordId, table: notification.tableName } : "null")
 
     const translateInteractionType = (type: string) => {
         const typeKey = type?.toUpperCase()

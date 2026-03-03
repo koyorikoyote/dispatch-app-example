@@ -8,6 +8,7 @@ import type {
   Notification,
   NotificationsResponse,
 } from "../types/notifications";
+import type { ApiResponse } from "../types/api";
 
 export const notificationsApi = {
   /**
@@ -40,5 +41,35 @@ export const notificationsApi = {
     }
 
     return response.data.length;
+  },
+
+  /**
+   * Mark a notification as read
+   */
+  async markAsRead(id: number): Promise<boolean> {
+    const response = await apiClient.post<ApiResponse>(
+      `/mobile/notifications/${id}/read`
+    );
+    return response.success;
+  },
+
+  /**
+   * Mark all notifications as read
+   */
+  async markAllAsRead(): Promise<boolean> {
+    const response = await apiClient.post<ApiResponse>(
+      "/mobile/notifications/read-all"
+    );
+    return response.success;
+  },
+
+  /**
+   * Delete a notification
+   */
+  async deleteNotification(id: number): Promise<boolean> {
+    const response = await apiClient.delete<ApiResponse>(
+      `/mobile/notifications/${id}`
+    );
+    return response.success;
   },
 };

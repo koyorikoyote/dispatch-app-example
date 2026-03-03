@@ -37,6 +37,7 @@ export interface LoginRequest {
 export interface LoginResponse {
   success: boolean;
   token: string;
+  refreshToken: string;
   user: {
     id: number;
     username: string;
@@ -49,7 +50,7 @@ export interface LoginResponse {
 }
 
 export interface LogoutRequest {
-  token: string;
+  refreshToken: string;
 }
 
 // User types

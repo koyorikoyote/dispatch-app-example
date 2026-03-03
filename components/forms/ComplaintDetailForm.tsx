@@ -74,14 +74,14 @@ export function ComplaintDetailForm({ onSuccess, onDirtyChange }: ComplaintDetai
         if (!formData.complainerName?.trim()) {
             newErrors.complainerName = t("forms.complaintDetail.errors.nameRequired")
         }
-        if (formData.complainerContact && formData.complainerContact.length < 10) {
-            newErrors.complainerContact = t("forms.validation.minLength", { min: 10 })
+        if (formData.complainerContact && formData.complainerContact.length < 2) {
+            newErrors.complainerContact = t("forms.validation.minLength", { min: 2 })
         }
         if (!formData.complaintContent?.trim()) {
             newErrors.complaintContent = t("forms.complaintDetail.errors.contentRequired")
         }
-        if (formData.complaintContent && formData.complaintContent.trim().length < 10) {
-            newErrors.complaintContent = t("forms.validation.minLength", { min: 10 })
+        if (formData.complaintContent && formData.complaintContent.trim().length < 2) {
+            newErrors.complaintContent = t("forms.validation.minLength", { min: 2 })
         }
         if (!formData.urgencyLevel) {
             newErrors.urgencyLevel = t("forms.complaintDetail.errors.urgencyRequired")

@@ -81,7 +81,7 @@ export class ErrorHandler {
         field: err.field,
         message: err.message,
       }));
-      baseError.message = this.formatValidationErrors(baseError.validationErrors);
+      baseError.message = this.formatValidationErrors(baseError.validationErrors!);
     }
 
     return baseError;
@@ -271,12 +271,12 @@ export const useErrorHandler = () => {
     onRetry?: () => void
   ) => {
     ErrorHandler.logError(error, context);
-    
+
     const processedError = ErrorHandler.processError(error);
-    
+
     // Show alert for user-facing errors
     ErrorHandler.showErrorAlert(error, 'Error', customMessage, onRetry);
-    
+
     return processedError;
   };
 

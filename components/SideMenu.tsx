@@ -351,12 +351,6 @@ export function SideMenu({ visible, onClose }: SideMenuProps) {
             </TouchableOpacity>
           </View>
 
-
-
-          <View style={styles.menuFooter}>
-            <Text style={styles.appVersion}>{t("navigation.appVersion")}</Text>
-            <Text style={styles.appSubtitle}>{t("navigation.appSubtitle")}</Text>
-          </View>
         </Animated.View>
       </View>
     </Modal>

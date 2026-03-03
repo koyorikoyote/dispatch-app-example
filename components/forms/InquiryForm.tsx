@@ -82,8 +82,8 @@ export function InquiryForm({ onSuccess, onDirtyChange }: InquiryFormProps) {
         if (!formData.inquirerContact?.trim()) {
             newErrors.inquirerContact = t("forms.inquiry.errors.contactRequired")
         }
-        if (formData.inquirerContact && formData.inquirerContact.length < 10) {
-            newErrors.inquirerContact = t("forms.validation.minLength", { min: 10 })
+        if (formData.inquirerContact && formData.inquirerContact.length < 2) {
+            newErrors.inquirerContact = t("forms.validation.minLength", { min: 2 })
         }
         if (!formData.typeOfInquiry) {
             newErrors.typeOfInquiry = t("forms.inquiry.errors.typeRequired")
@@ -91,8 +91,8 @@ export function InquiryForm({ onSuccess, onDirtyChange }: InquiryFormProps) {
         if (!formData.inquiryContent?.trim()) {
             newErrors.inquiryContent = t("forms.inquiry.errors.contentRequired")
         }
-        if (formData.inquiryContent && formData.inquiryContent.trim().length < 10) {
-            newErrors.inquiryContent = t("forms.validation.minLength", { min: 10 })
+        if (formData.inquiryContent && formData.inquiryContent.trim().length < 2) {
+            newErrors.inquiryContent = t("forms.validation.minLength", { min: 2 })
         }
 
         setErrors(newErrors)

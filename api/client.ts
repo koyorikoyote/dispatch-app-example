@@ -22,6 +22,11 @@ export class ApiClient {
       headers: API_CONFIG.HEADERS,
     });
 
+    if (ENV_CONFIG.enableApiLogging) {
+      console.log(`🔌 API Client initialized with Base URL: ${API_CONFIG.BASE_URL}`);
+      console.log(`⏱️ API Timeout: ${API_CONFIG.TIMEOUT}ms`);
+    }
+
     this.setupInterceptors();
     this.setupNetworkMonitoring();
   }
@@ -304,14 +309,48 @@ export class ApiClient {
       if (Platform.OS === "web") {
         // Use localStorage for web
         localStorage.removeItem("auth_token");
+        localStorage.removeItem("auth_refresh_token");
       } else {
         // Use SecureStore for native
         if (SecureStore && typeof SecureStore.deleteItemAsync === "function") {
           await SecureStore.deleteItemAsync("auth_token");
+          await SecureStore.deleteItemAsync("auth_refresh_token");
         }
       }
     } catch (error) {
       console.warn("Failed to clear auth token:", error);
+    }
+  }
+
+  // Get current refresh token
+  async getRefreshToken(): Promise<string | null> {
+    try {
+      let token: string | null = null;
+      if (Platform.OS === "web") {
+        token = localStorage.getItem("auth_refresh_token");
+      } else {
+        if (SecureStore && typeof SecureStore.getItemAsync === "function") {
+          token = await SecureStore.getItemAsync("auth_refresh_token");
+        }
+      }
+      return token && token.trim().length > 0 ? token : null;
+    } catch {
+      return null;
+    }
+  }
+
+  // Set refresh token
+  async setRefreshToken(token: string): Promise<void> {
+    try {
+      if (Platform.OS === "web") {
+        localStorage.setItem("auth_refresh_token", token);
+      } else {
+        if (SecureStore && typeof SecureStore.setItemAsync === "function") {
+          await SecureStore.setItemAsync("auth_refresh_token", token);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to store refresh token:", error);
     }
   }
 
@@ -336,18 +375,17 @@ export class ApiClient {
 
   private async performTokenRefresh(): Promise<string | null> {
     try {
-      const currentToken = await this.getAuthToken();
-      if (!currentToken) {
+      const currentRefreshToken = await this.getRefreshToken();
+      if (!currentRefreshToken) {
         return null;
       }
 
       // Make refresh request without interceptors to avoid infinite loop
       const response = await axios.post(
         `${API_CONFIG.BASE_URL}/mobile/auth/refresh`,
-        {},
+        { refreshToken: currentRefreshToken },
         {
           headers: {
-            Authorization: `Bearer ${currentToken}`,
             "Content-Type": "application/json",
           },
           timeout: API_CONFIG.TIMEOUT,
@@ -356,7 +394,11 @@ export class ApiClient {
 
       if (response.data?.success && response.data?.data?.token) {
         const newToken = response.data.data.token;
+        const newRefreshToken = response.data.data.refreshToken;
         await this.setAuthToken(newToken);
+        if (newRefreshToken) {
+          await this.setRefreshToken(newRefreshToken);
+        }
         return newToken;
       }
 
@@ -389,8 +431,7 @@ export class ApiClient {
 
         if (ENV_CONFIG.enableApiLogging) {
           console.log(
-            `Retrying request (attempt ${retryCount + 1}/${
-              ENV_CONFIG.retryAttempts
+            `Retrying request (attempt ${retryCount + 1}/${ENV_CONFIG.retryAttempts
             }) after ${Math.round(delay)}ms`
           );
         }

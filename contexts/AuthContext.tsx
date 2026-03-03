@@ -8,6 +8,7 @@ import { authApi } from '../api/auth'
 import { apiClient } from '../api/client'
 import type { User as ApiUser, LoginResponse } from '../types/api'
 import { clearAllSavedStates } from '../utils/statePersistence'
+import { ApiCache } from '../utils/apiCache'
 
 interface User {
   id: number
@@ -34,6 +35,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 // Token storage keys
 const TOKEN_KEY = 'auth_token'
+const REFRESH_TOKEN_KEY = 'auth_refresh_token'
 const TOKEN_EXPIRY_KEY = 'auth_token_expiry'
 const USER_DATA_KEY = 'user_data'
 
@@ -112,6 +114,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const token = await apiClient.getAuthToken()
       const expiryStr = await secureStorage.getItem(TOKEN_EXPIRY_KEY)
       const userData = await secureStorage.getItem(USER_DATA_KEY)
+      const refreshToken = await secureStorage.getItem(REFRESH_TOKEN_KEY)
 
       if (token && expiryStr && userData) {
         const expiry = new Date(expiryStr)
@@ -120,9 +123,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Check if token is expired
         if (expiry <= now) {
           // Token expired, try to refresh
-          const refreshed = await performTokenRefresh()
-          if (!refreshed) {
-            // Refresh failed, clear stored data
+          if (refreshToken) {
+            const refreshed = await performTokenRefresh(refreshToken)
+            if (!refreshed) {
+              // Refresh failed, clear stored data
+              await clearStoredAuth()
+              return
+            }
+          } else {
             await clearStoredAuth()
             return
           }
@@ -131,6 +139,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           setUser(JSON.parse(userData))
           // Schedule token refresh before expiry
           scheduleTokenRefresh(expiry)
+        }
+      } else if (!token && refreshToken && expiryStr && userData) {
+        // Case where token might be cleared but refresh token still exists
+        const refreshed = await performTokenRefresh(refreshToken)
+        if (!refreshed) {
+          await clearStoredAuth()
+          return
         }
       }
     } catch (err: any) {
@@ -163,6 +178,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Store authentication data securely
       // Note: authApi.login() already stores the token via apiClient.setAuthToken()
       // We only need to store the expiry and user data
+      await secureStorage.setItem(REFRESH_TOKEN_KEY, response.refreshToken)
       await secureStorage.setItem(TOKEN_EXPIRY_KEY, response.expiresAt)
       await secureStorage.setItem(USER_DATA_KEY, JSON.stringify(mappedUser))
 
@@ -208,8 +224,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         tokenRefreshTimer.current = null
       }
 
+      const refreshToken = await secureStorage.getItem(REFRESH_TOKEN_KEY)
+
       // Call backend logout API
-      await authApi.logout()
+      await authApi.logout(refreshToken || undefined)
 
       // Clear local state and storage
       setUser(null)
@@ -270,16 +288,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       // Use apiClient's method to clear token
       await apiClient.clearAuthToken()
+      await secureStorage.deleteItem(REFRESH_TOKEN_KEY)
       await secureStorage.deleteItem(TOKEN_EXPIRY_KEY)
       await secureStorage.deleteItem(USER_DATA_KEY)
+      await ApiCache.clear()
     } catch (err) {
       console.warn("Failed to clear some stored auth data:", err)
     }
   }
 
-  const performTokenRefresh = async (): Promise<boolean> => {
+  const performTokenRefresh = async (tokenStr?: string): Promise<boolean> => {
     try {
-      const response = await authApi.refreshToken()
+      const refreshTokenToUse = tokenStr || await secureStorage.getItem(REFRESH_TOKEN_KEY)
+      if (!refreshTokenToUse) return false;
+
+      const response = await authApi.refreshToken(refreshTokenToUse)
 
       // Map API user to local user format
       const mappedUser = mapApiUserToUser(response.user)
@@ -288,6 +311,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Store updated authentication data
       // Note: authApi.refreshToken() already stores the token via apiClient.setAuthToken()
       // We only need to store the expiry and user data
+      await secureStorage.setItem(REFRESH_TOKEN_KEY, response.refreshToken)
       await secureStorage.setItem(TOKEN_EXPIRY_KEY, response.expiresAt)
       await secureStorage.setItem(USER_DATA_KEY, JSON.stringify(mappedUser))
 

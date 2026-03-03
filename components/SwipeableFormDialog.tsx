@@ -6,6 +6,7 @@ import {
     Modal,
     StyleSheet,
     Dimensions,
+    Platform,
     TouchableOpacity,
     Text,
     ScrollView,
@@ -21,6 +22,22 @@ import { InquiryForm } from "./forms/InquiryForm"
 import { DailyRecordForm } from "./forms/DailyRecordForm"
 import { InteractionRecordForm } from "./forms/InteractionRecordForm"
 import { ComplaintDetailForm } from "./forms/ComplaintDetailForm"
+
+function canvasTextWidth(text: string, fontSize: number, fontWeight: string = '400'): number {
+    if (typeof document === 'undefined') return 0
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return 0
+    ctx.font = `${fontWeight} ${fontSize}px system-ui, -apple-system, BlinkMacSystemFont, sans-serif`
+    return ctx.measureText(text).width * 1.1  // 10% buffer for renderer differences
+}
+
+function fitFontSize(text: string, availableWidth: number, maxSize: number, minSize: number, fontWeight: string = '400'): number {
+    for (let size = maxSize; size >= minSize; size--) {
+        if (canvasTextWidth(text, size, fontWeight) <= availableWidth) return size
+    }
+    return minSize
+}
 
 interface SwipeableFormDialogProps {
     visible: boolean
@@ -358,6 +375,14 @@ export function SwipeableFormDialog({
                         >
                             {forms.map((form, index) => {
                                 const isActive = index === currentFormIndex
+                                const title = getFormTitle(form)
+                                const iconSpace = 16 + 5  // icon size + marginRight
+                                const tabPaddingH = 6 * 2
+                                const availableTextWidth = calculatedTabWidth - iconSpace - tabPaddingH
+                                const fontWeight = isActive ? '600' : '400'
+                                const tabFontSize = Platform.OS === 'web'
+                                    ? fitFontSize(title, availableTextWidth, 13, 9, fontWeight)
+                                    : 13
                                 const tabStyle = {
                                     ...styles.tab,
                                     width: calculatedTabWidth,
@@ -374,6 +399,7 @@ export function SwipeableFormDialog({
                                 }
                                 const tabTextStyle = {
                                     ...styles.tabText,
+                                    fontSize: tabFontSize,
                                     color: isActive
                                         ? "#fff"
                                         : isDarkMode
@@ -395,8 +421,13 @@ export function SwipeableFormDialog({
                                             color={isActive ? "#fff" : isDarkMode ? "#aaa" : "#666"}
                                             style={styles.tabIcon}
                                         />
-                                        <Text style={tabTextStyle} numberOfLines={1} ellipsizeMode="tail">
-                                            {getFormTitle(form)}
+                                        <Text
+                                            style={tabTextStyle}
+                                            numberOfLines={1}
+                                            adjustsFontSizeToFit={Platform.OS !== 'web'}
+                                            minimumFontScale={0.7}
+                                        >
+                                            {title}
                                         </Text>
                                     </TouchableOpacity>
                                 )
@@ -534,7 +565,7 @@ const styles = StyleSheet.create({
     tab: {
         flexDirection: "row",
         alignItems: "center",
-        paddingHorizontal: 10,
+        paddingHorizontal: 6,
         paddingVertical: 8,
         borderRadius: 6,
         borderWidth: 1,
