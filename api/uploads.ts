@@ -1,20 +1,16 @@
 /**
  * Uploads API
- * API methods for file upload management
+ * File upload via server-side backend (Google Drive storage)
  */
 
 import { apiClient } from "./client";
-import type { ApiResponse } from "../types/api";
 
-export interface PresignedUploadResponse {
-  url: string;
-  key: string;
-  headers: Record<string, string>;
+export interface UploadResponse {
   publicUrl: string;
+  key: string;
 }
 
-export interface PresignRequest {
-  contentType: string;
+export interface UploadRequest {
   scope?: "submission" | "comment";
   refId?: number;
   keyHint?: string;
@@ -22,43 +18,46 @@ export interface PresignRequest {
 
 export const uploadsApi = {
   /**
-   * Get presigned URL for direct S3 upload
+   * Upload a file through the backend to Google Drive.
+   * Returns the public view URL and a key identifier.
    */
-  async getPresignedUrl(
-    data: PresignRequest
-  ): Promise<PresignedUploadResponse> {
-    const response = await apiClient.post<ApiResponse<PresignedUploadResponse>>(
-      "/mobile/uploads/presign",
-      data
-    );
-
-    if (!response.success || !response.data) {
-      throw new Error("Failed to get presigned URL");
-    }
-
-    return response.data;
-  },
-
-  /**
-   * Upload file directly to S3 using presigned URL
-   */
-  async uploadToS3(
-    presignedUrl: string,
+  async uploadFile(
     file: Blob,
     contentType: string,
-    headers: Record<string, string>
-  ): Promise<void> {
-    const response = await fetch(presignedUrl, {
-      method: "PUT",
-      body: file,
-      headers: {
-        "Content-Type": contentType,
-        ...headers,
-      },
-    });
+    options?: UploadRequest
+  ): Promise<UploadResponse> {
+    const formData = new FormData();
+    formData.append("file", file);
+    if (options?.scope) formData.append("scope", options.scope);
+    if (options?.refId != null) formData.append("refId", String(options.refId));
+    if (options?.keyHint) formData.append("keyHint", options.keyHint);
+
+    const token = await apiClient.getAuthToken();
+    if (!token) {
+      throw new Error("No authentication token available");
+    }
+
+    const response = await fetch(
+      `${apiClient.getBaseUrl()}/mobile/uploads/presign`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
-      throw new Error("Failed to upload file to S3");
+      throw new Error(`Upload failed: ${response.status}`);
     }
+
+    const result = await response.json();
+
+    if (!result.success || !result.data) {
+      throw new Error("Failed to upload file");
+    }
+
+    return result.data as UploadResponse;
   },
 };
