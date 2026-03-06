@@ -11,6 +11,8 @@
     "electron:build": "electron-builder --config electron-builder.json",
     "build:desktop": "npm run export:prod && npm run electron:build",
     "export:prod": "cross-env NODE_ENV=production npx expo export",
+    "build:web:prod": "cross-env NODE_ENV=production npx expo export -p web",
+    "deploy:hosting": "firebase deploy --only hosting",
     "test": "jest",
     "test:watch": "jest --watch"
   },

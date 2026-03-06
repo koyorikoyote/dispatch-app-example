@@ -125,6 +125,16 @@
       "invalidCredentials": "無効な認証情報",
       "loginFailed": "ログインに失敗しました",
       "emptyFields": "ユーザー名とパスワードの両方を入力してください"
+    },
+    "changePassword": {
+      "title": "パスワード変更",
+      "currentPassword": "現在のパスワード",
+      "newPassword": "新しいパスワード",
+      "confirmPassword": "新しいパスワード（確認）",
+      "success": "パスワードが正常に変更されました",
+      "passwordsDoNotMatch": "新しいパスワードが一致しません",
+      "passwordTooShort": "パスワードは6文字以上である必要があります",
+      "incorrectCurrentPassword": "現在のパスワードが間違っています"
     }
   },
   "tabs": {

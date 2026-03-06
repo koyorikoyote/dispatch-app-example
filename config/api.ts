@@ -81,6 +81,7 @@ export const ENDPOINTS = {
     LOGIN: "/mobile/auth/login",
     LOGOUT: "/mobile/auth/logout",
     REFRESH: "/mobile/auth/refresh",
+    CHANGE_PASSWORD: "/mobile/auth/change-password",
   },
 
   // Submission endpoints

@@ -22,7 +22,8 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const [localError, setLocalError] = useState<string | null>(null);
+  const { login, error: contextError } = useAuth();
   const { isDarkMode } = useTheme();
   const { t } = useLanguage();
   const router = useRouter();
@@ -53,22 +54,30 @@ export default function Login() {
     color: isDarkMode ? "#666" : "#999",
   };
 
+  const displayError = (() => {
+    const err = localError || contextError;
+    if (!err) return null;
+    if (err.includes("Invalid credentials")) return t("auth.errors.invalidCredentials");
+    if (err.includes("Network error") || err.includes("No internet")) return t("network.noConnection");
+    return err;
+  })();
+
   const handleLogin = async () => {
+    setLocalError(null);
     if (!username || !password) {
-      Alert.alert(t("auth.errors.general"), t("auth.errors.emptyFields"));
+      setLocalError(t("auth.errors.emptyFields"));
       return;
     }
 
     setIsLoading(true);
     try {
       const success = await login(username, password);
+      // Wait, login function in AuthContext catches errors and stores it in context.error, returning false.
       if (success) {
         router.replace("/");
-      } else {
-        Alert.alert(t("auth.errors.general"), t("auth.errors.invalidCredentials"));
       }
     } catch (error) {
-      Alert.alert(t("auth.errors.general"), t("auth.errors.loginFailed"));
+      setLocalError(t("auth.errors.loginFailed"));
     } finally {
       setIsLoading(false);
     }
@@ -95,6 +104,25 @@ export default function Login() {
         </View>
 
         <View style={styles.formContainer}>
+          {Boolean(displayError) && (
+            <View style={{
+              flexDirection: "row",
+              alignItems: "center",
+              backgroundColor: "rgba(255, 68, 68, 0.1)",
+              padding: 12,
+              borderRadius: 8,
+              marginBottom: 16,
+              gap: 8,
+            }}>
+              <Ionicons name="alert-circle" size={20} color="#ff4444" />
+              <Text style={{
+                color: "#ff4444",
+                fontSize: 14,
+                flex: 1,
+              }}>{displayError}</Text>
+            </View>
+          )}
+
           <View style={inputStyle}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Ionicons

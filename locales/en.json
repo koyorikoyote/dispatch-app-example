@@ -125,6 +125,16 @@
       "invalidCredentials": "Invalid credentials",
       "loginFailed": "Login failed",
       "emptyFields": "Please enter both username and password"
+    },
+    "changePassword": {
+      "title": "Change Password",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "success": "Password changed successfully",
+      "passwordsDoNotMatch": "New passwords do not match",
+      "passwordTooShort": "Password must be at least 6 characters",
+      "incorrectCurrentPassword": "Incorrect current password"
     }
   },
   "tabs": {

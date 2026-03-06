@@ -48,6 +48,27 @@ export const authApi = {
   },
 
   /**
+   * Change current user's password
+   */
+  async changePassword(data: { currentPassword: string; newPassword: string }): Promise<void> {
+    try {
+      const resp = await apiClient.post<ApiResponse<void>>(
+        ENDPOINTS.AUTH.CHANGE_PASSWORD,
+        data
+      );
+
+      if (!resp.success) {
+        throw new Error(resp.error || 'Failed to change password');
+      }
+    } catch (error: any) {
+      if (error.response?.data?.error) {
+        throw new Error(error.response.data.error);
+      }
+      throw error;
+    }
+  },
+
+  /**
    * Refresh authentication token
    */
   async refreshToken(refreshToken: string): Promise<LoginResponse> {

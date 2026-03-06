@@ -20,9 +20,10 @@ import { usePlatform } from "../utils/platform";
 interface SideMenuProps {
   visible: boolean;
   onClose: () => void;
+  onChangePassword?: () => void;
 }
 
-export function SideMenu({ visible, onClose }: SideMenuProps) {
+export function SideMenu({ visible, onClose, onChangePassword }: SideMenuProps) {
   const { user, logout } = useAuth();
   const { isDarkMode } = useTheme();
   const { lang, setLang, t } = useLanguage();
@@ -264,6 +265,10 @@ export function SideMenu({ visible, onClose }: SideMenuProps) {
               style={{
                 ...styles.menuItem,
                 backgroundColor: isDarkMode ? "#2d2d2e" : "#f5f5f5",
+              }}
+              onPress={() => {
+                onClose();
+                onChangePassword?.();
               }}
             >
               <Text

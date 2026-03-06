@@ -60,3 +60,7 @@ electron-package.json
 build-desktop.ps1
 ELECTRON-BUILD-GUIDE.md
 .electronignore
+
+# Firebase
+firebase-debug.log
+.firebase/
